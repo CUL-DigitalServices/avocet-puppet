@@ -68,6 +68,9 @@ fi
 # Enable uploading publications
 curl --cookie connect.sess=${ADMIN_COOKIE} -e "/" -d "oae-publications/publications/allowUserEntry=true" http://<%= admin_host %>/api/config/cam
 
+# Enable creating tickets
+curl --cookie connect.sess=${ADMIN_COOKIE} -e "/" -d "oae-tickets/general/enabled=true" http://<%= admin_host %>/api/config/cam
+
 # Enable the Google strategy
 curl --cookie connect.sess=${ADMIN_COOKIE} -e "/" -d "oae-authentication/google/enabled=true" -d"oae-authentication/google/key=832766182042-er6qqh5nqitn30oqrtad7mvgcadl6dcr.apps.googleusercontent.com" -d"oae-authentication/google/secret=MKo6exTvIM8_tiJDt1t4zYWz" http://<%= admin_host %>/api/config/cam
 
