@@ -1,0 +1,10 @@
+{
+    "classes": [
+        "::oaeservice::hilary",
+        "::oaeservice::ui",
+        "::oaeservice::postfix"
+    ],
+
+    "email_debug": false,
+    "hilary::config_activity_enabled": true
+}

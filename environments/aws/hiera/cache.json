@@ -1,0 +1,6 @@
+{
+    "classes": [
+        "::oaeservice::redis"
+    ],
+    "redis::syslog_enabled": true,
+}

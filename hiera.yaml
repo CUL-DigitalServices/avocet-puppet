@@ -1,0 +1,17 @@
+---
+:backends:
+  - json
+
+:hierarchy:
+  - "%{::clientcert}_hiera_secure"
+  - "%{::clientcert}"
+  - "%{nodetype}_hiera_secure"
+  - "%{nodetype}"
+  - common_hiera_secure
+  - common
+
+:yaml:
+  :datadir: "/etc/puppet/environments/%{::environment}/hiera"
+
+:json:
+  :datadir: "/etc/puppet/environments/%{::environment}/hiera"
