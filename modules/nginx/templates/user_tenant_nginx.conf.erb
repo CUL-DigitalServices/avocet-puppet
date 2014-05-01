@@ -165,6 +165,19 @@ server {
     rewrite ^/docs/frontend         /docs/index.html last;
 
 
+    ####################
+    ## TEST RESOURCES ##
+    ####################
+
+    location /tests/ {
+        alias <%= app_ui_path %>/tests/;
+        autoindex off;
+        expires -1;
+    }
+
+    rewrite ^/tests$  /tests/index.html last;
+
+
     #################
     ## ERROR PAGES ##
     #################
