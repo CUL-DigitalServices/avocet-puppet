@@ -60,7 +60,7 @@ curl --cookie connect.sess=${ADMIN_COOKIE} -e "/" -d "alias=cam" -d"displayName=
 # Disable reCaptcha
 curl --cookie connect.sess=${ADMIN_COOKIE} -e "/" -d "oae-principals/recaptcha/enabled=false" http://<%= admin_host %>/api/config/cam
 
-if [[ "<%= flickr_api_key %>" != "unset" ]] ; then
+if [ "<%= flickr_api_key %>" != "unset" ] ; then
     # Configuring the Flickr and SlideShare Preview Processor
     curl --cookie connect.sess=${ADMIN_COOKIE} -e "/" -d"oae-preview-processor/flickr/apikey=<%=flickr_api_key %>" -d"oae-preview-processor/flickr/apisecret=<%=flickr_api_secret %>" -d"oae-preview-processor/slideshare/sharedsecret=<%=slideshare_shared_secret %>" -d"oae-preview-processor/slideshare/apikey=<%= slideshare_api_key %>" http://<%= admin_host %>/api/config
 fi
@@ -71,3 +71,11 @@ curl --cookie connect.sess=${ADMIN_COOKIE} -e "/" -d "oae-publications/publicati
 # Enable the Google strategy
 curl --cookie connect.sess=${ADMIN_COOKIE} -e "/" -d "oae-authentication/google/enabled=true" -d"oae-authentication/google/key=832766182042-er6qqh5nqitn30oqrtad7mvgcadl6dcr.apps.googleusercontent.com" -d"oae-authentication/google/secret=MKo6exTvIM8_tiJDt1t4zYWz" http://<%= admin_host %>/api/config/cam
 
+# Upload the departments
+curl --cookie connect.sess=${ADMIN_COOKIE} -e "/" -F "departments=@/opt/scripts/departments.csv" -F"tenantAlias=cam" http://admin.dev0.avocet.cam.ac.uk/api/departments/import
+
+# Upload the journals
+curl --cookie connect.sess=${ADMIN_COOKIE} -e "/" -F"journals=@/opt/scripts/journals.csv" http://admin.dev0.avocet.cam.ac.uk/api/journals/import
+
+# Set the addendum download url
+curl --cookie connect.sess=${ADMIN_COOKIE} -e "/" -d "oae-tickets/general/addendumUrl=<%= addendum_url %>" http://<%= admin_host %>/api/config/cam

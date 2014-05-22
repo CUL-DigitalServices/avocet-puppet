@@ -32,6 +32,7 @@ server {
     ssl_ciphers RC4:HIGH:!aNULL:!MD5;
     ssl_prefer_server_ciphers on;
 
+
     ######################
     ## SHARED RESOURCES ##
     ######################
@@ -42,19 +43,19 @@ server {
         expires max;
     }
 
-    # HTML files under /shared/oae/errors are not hashed and should not be cached
-    location ~* /shared/oae/errors/([^\.]+).html$ {
-        alias <%= app_ui_path %>/shared/oae/errors/$1.html;
+    # HTML files under /avocet/errors are not hashed and should not be cached
+    location ~* /avocet/errors/([^\.]+).html$ {
+        alias <%= app_ui_path %>/avocet/errors/$1.html;
         expires -1;
     }
 
-    rewrite ^/accessdenied      /shared/oae/errors/accessdenied.html last;
-    rewrite ^/maintenance       /shared/oae/errors/maintenance.html last;
-    rewrite ^/noscript          /shared/oae/errors/noscript.html last;
-    rewrite ^/notfound          /shared/oae/errors/notfound.html last;
-    rewrite ^/unavailable       /shared/oae/errors/unavailable.html last;
+    rewrite ^/accessdenied      /avocet/errors/accessdenied.html last;
+    rewrite ^/maintenance       /avocet/errors/unavailable.html last;
+    rewrite ^/noscript          /avocet/errors/noscript.html last;
+    rewrite ^/notfound          /avocet/errors/notfound.html last;
+    rewrite ^/unavailable       /avocet/errors/unavailable.html last;
 
-    rewrite ^/favicon.ico       /shared/oae/img/favicon.ico last;
+    rewrite ^/favicon.ico       /avocet/images/favicon.ico last;
 
 
     #####################
@@ -73,50 +74,15 @@ server {
         expires -1;
     }
 
-    rewrite ^/admin$  /admin/index.html last;
-
-        ######################
-        ## AVOCET RESOURCES ##
-        ######################
-
-        location /avocet/ {
-            alias <%= app_ui_path %>/avocet/;
-            autoindex off;
-            expires -1;
-        }
-
-        # HTML files under /avocet are not hashed and should not be cached
-        location ~* /avocet/([^\.]+).html$ {
-            alias <%= app_ui_path %>/avocet/$1.html;
-            expires -1;
-        }
-
-        rewrite ^/$              /avocet/index.html last;
-        rewrite ^/me$            /avocet/me.html last;
-        rewrite ^/publication    /avocet/publication.html last;
-
+    rewrite ^/admin$          /admin/index.html last;
+    rewrite ^/admin/tenants   /admin/index.html last;
+    rewrite ^/admin/modules   /admin/index.html last;
+    rewrite ^/admin/skinning  /admin/index.html last;
 
 
     #######################
     ## MAIN UI RESOURCES ##
     #######################
-
-    # TODO: Remove this custom landing page strategy and /custom handling when we have configurable landing pages
-    location = / {
-        autoindex off;
-        expires -1;
-
-        # Tell Nginx that the root is the UI directory so custom files can be located with try_files
-        root <%= app_ui_path %>;
-
-        try_files /custom/$host/index.html /ui/index.html;
-    }
-
-    location /ui/ {
-        alias <%= app_ui_path %>/ui/;
-        autoindex off;
-        expires max;
-    }
 
     location /custom/ {
         alias <%= app_ui_path %>/custom/;
@@ -124,11 +90,29 @@ server {
         expires max;
     }
 
-    # HTML files under /ui are not hashed and should not be cached
-    location ~* /ui/([^\.]+).html$ {
-        alias <%= app_ui_path %>/ui/$1.html;
+
+    ######################
+    ## AVOCET RESOURCES ##
+    ######################
+
+    location /avocet/ {
+        alias <%= app_ui_path %>/avocet/;
+        autoindex off;
+        expires max;
+    }
+
+    # HTML files under /avocet are not hashed and should not be cached
+    location ~* /avocet/([^\.]+).html$ {
+        alias <%= app_ui_path %>/avocet/$1.html;
         expires -1;
     }
+
+    rewrite ^/$              /avocet/index.html last;
+    rewrite ^/me$            /avocet/me.html last;
+    rewrite ^/publication    /avocet/publication.html last;
+    rewrite ^/changing       /avocet/changing.html last;
+    rewrite ^/todo           /avocet/todo.html last;
+    rewrite ^/openaccess     /avocet/openaccess.html last;
 
 
     ######################
@@ -166,10 +150,10 @@ server {
     ## ERROR PAGES ##
     #################
 
-    error_page      401     /shared/oae/errors/accessdenied.html;
-    error_page      404     /shared/oae/errors/notfound.html;
-    error_page      502     /shared/oae/errors/unavailable.html;
-    error_page      503     /shared/oae/errors/maintenance.html;
+    error_page      401     /avocet/errors/accessdenied.html;
+    error_page      404     /avocet/errors/notfound.html;
+    error_page      502     /avocet/errors/unavailable.html;
+    error_page      503     /avocet/errors/unavailable.html;
 
 
 <% if static_assets_dir -%>
@@ -191,163 +175,206 @@ server {
     ## APP SERVER REQUESTS ##
     #########################
 
-    location /api/auth/shibboleth/callback {
-        proxy_read_timeout 120;
-        proxy_next_upstream error http_502;
-        proxy_pass http://tenantworkers;
-    }
 
-    location /api/config {
-        expires 15m;
-        proxy_pass http://tenantworkers;
-    }
+        ############
+        ## AVOCET ##
+        ############
 
-    location /api/content/create {
-<% if rate_limit_api -%>
-        limit_req zone=addr_api_create burst=10;
-<% end -%>
+        location /api/departments/import {
+            <% if rate_limit_api -%>
+                limit_req zone=addr_api burst=10;
+            <% end -%>
 
-        expires -1;
-        proxy_read_timeout 300;
-        proxy_next_upstream error http_502;
-        proxy_pass http://tenantworkers;
-    }
+            expires -1;
+            proxy_read_timeout 120;
+            proxy_next_upstream error http_502;
+            proxy_pass http://tenantworkers;
+        }
 
-    location ~* /api/content/([^\/]+)/messages {
-<% if rate_limit_api -%>
-        limit_req zone=addr_api_create burst=400;
-<% end -%>
+        location /api/publications/create {
+    <% if rate_limit_api -%>
+            limit_req zone=addr_api_create burst=10;
+    <% end -%>
 
-        expires -1;
-        proxy_next_upstream error http_502;
-        proxy_pass http://tenantworkers;
-    }
+            expires -1;
+            proxy_read_timeout 300;
+            proxy_next_upstream error http_502;
+            proxy_pass http://tenantworkers;
+        }
 
-    location ~* /api/content/([^\/]+)/newversion {
-<% if rate_limit_api -%>
-        limit_req zone=addr_api_create burst=10;
-<% end -%>
+        location /api/tickets/create {
+    <% if rate_limit_api -%>
+            limit_req zone=addr_api_create burst=10;
+    <% end -%>
 
-        expires -1;
-        proxy_read_timeout 300;
-        proxy_next_upstream error http_502;
-        proxy_pass http://tenantworkers;
-    }
+            expires -1;
+            proxy_read_timeout 300;
+            proxy_next_upstream error http_502;
+            proxy_pass http://tenantworkers;
+        }
 
-    location ~* /api/content/([^\/]+)/revisions/([^\/]+)/previews {
-<% if rate_limit_api -%>
-        limit_req zone=addr_api_create burst=10;
-<% end -%>
 
-        expires -1;
-        proxy_read_timeout 1200;
-        proxy_next_upstream error http_502;
-        proxy_pass http://tenantworkers;
-    }
+        ############
+        ## SHARED ##
+        ############
 
-    location /api/discussion/create {
-<% if rate_limit_api -%>
-        limit_req zone=addr_api_create burst=10;
-<% end -%>
+        location /api/auth/shibboleth/callback {
+            proxy_read_timeout 120;
+            proxy_next_upstream error http_502;
+            proxy_pass http://tenantworkers;
+        }
 
-        expires -1;
-        proxy_next_upstream error http_502;
-        proxy_pass http://tenantworkers;
-    }
+        location /api/config {
+            expires 15m;
+            proxy_pass http://tenantworkers;
+        }
 
-    location ~* /api/discussion/([^\/]+)/messages {
-<% if rate_limit_api -%>
-        limit_req zone=addr_api_create burst=400;
-<% end -%>
+        location /api/content/create {
+    <% if rate_limit_api -%>
+            limit_req zone=addr_api_create burst=10;
+    <% end -%>
 
-        expires -1;
-        proxy_next_upstream error http_502;
-        proxy_pass http://tenantworkers;
-    }
+            expires -1;
+            proxy_read_timeout 300;
+            proxy_next_upstream error http_502;
+            proxy_pass http://tenantworkers;
+        }
 
-    # This can be cached indefinitely because we use signatures that change over time to control invalidation
-    location /api/download/signed {
-        expires max;
-        proxy_pass http://tenantworkers;
-    }
+        location ~* /api/content/([^\/]+)/messages {
+    <% if rate_limit_api -%>
+            limit_req zone=addr_api_create burst=400;
+    <% end -%>
 
-    location /api/group/create {
-<% if rate_limit_api -%>
-        limit_req zone=addr_api_create burst=10;
-<% end -%>
+            expires -1;
+            proxy_next_upstream error http_502;
+            proxy_pass http://tenantworkers;
+        }
 
-        expires -1;
-        proxy_next_upstream error http_502;
-        proxy_pass http://tenantworkers;
-    }
+        location ~* /api/content/([^\/]+)/newversion {
+    <% if rate_limit_api -%>
+            limit_req zone=addr_api_create burst=10;
+    <% end -%>
 
-    location ~* /api/group/([^\/]+)/picture {
-<% if rate_limit_api -%>
-        limit_req zone=addr_api_create burst=10;
-<% end -%>
+            expires -1;
+            proxy_read_timeout 300;
+            proxy_next_upstream error http_502;
+            proxy_pass http://tenantworkers;
+        }
 
-        expires -1;
-        proxy_read_timeout 60;
-        proxy_next_upstream error http_502;
-        proxy_pass http://tenantworkers;
-    }
+        location ~* /api/content/([^\/]+)/revisions/([^\/]+)/previews {
+    <% if rate_limit_api -%>
+            limit_req zone=addr_api_create burst=10;
+    <% end -%>
 
-    location /api/ui/skin {
-        expires 15m;
-        proxy_pass http://tenantworkers;
-    }
+            expires -1;
+            proxy_read_timeout 1200;
+            proxy_next_upstream error http_502;
+            proxy_pass http://tenantworkers;
+        }
 
-    location /api/ui/staticbatch {
-        expires max;
-        proxy_pass http://tenantworkers;
-    }
+        location /api/discussion/create {
+    <% if rate_limit_api -%>
+            limit_req zone=addr_api_create burst=10;
+    <% end -%>
 
-    location /api/ui/widgets {
-        expires 15m;
-        proxy_pass http://tenantworkers;
-    }
+            expires -1;
+            proxy_next_upstream error http_502;
+            proxy_pass http://tenantworkers;
+        }
 
-    location /api/user/create {
-<% if rate_limit_api -%>
-        limit_req zone=addr_api_create burst=10;
-<% end -%>
+        location ~* /api/discussion/([^\/]+)/messages {
+    <% if rate_limit_api -%>
+            limit_req zone=addr_api_create burst=400;
+    <% end -%>
 
-        expires -1;
-        proxy_next_upstream error http_502;
-        proxy_pass http://tenantworkers;
-    }
+            expires -1;
+            proxy_next_upstream error http_502;
+            proxy_pass http://tenantworkers;
+        }
 
-    location /api/user/import {
-<% if rate_limit_api -%>
-        limit_req zone=addr_api_create burst=10;
-<% end -%>
+        # This can be cached indefinitely because we use signatures that change over time to control invalidation
+        location /api/download/signed {
+            expires max;
+            proxy_pass http://tenantworkers;
+        }
 
-        expires -1;
-        proxy_read_timeout 300;
-        proxy_next_upstream error http_502;
-        proxy_pass http://tenantworkers;
-    }
+        location /api/group/create {
+    <% if rate_limit_api -%>
+            limit_req zone=addr_api_create burst=10;
+    <% end -%>
 
-    location ~* /api/user/([^\/]+)/picture {
-<% if rate_limit_api -%>
-        limit_req zone=addr_api_create burst=10;
-<% end -%>
+            expires -1;
+            proxy_next_upstream error http_502;
+            proxy_pass http://tenantworkers;
+        }
 
-        expires -1;
-        proxy_read_timeout 60;
-        proxy_next_upstream error http_502;
-        proxy_pass http://tenantworkers;
-    }
+        location ~* /api/group/([^\/]+)/picture {
+    <% if rate_limit_api -%>
+            limit_req zone=addr_api_create burst=10;
+    <% end -%>
 
-    # Explicitly don't cache any other API requests
-    location /api/ {
-<% if rate_limit_api -%>
-        limit_req zone=addr_api burst=400;
-<% end -%>
+            expires -1;
+            proxy_read_timeout 60;
+            proxy_next_upstream error http_502;
+            proxy_pass http://tenantworkers;
+        }
 
-        expires -1;
-        proxy_pass http://tenantworkers;
-    }
+        location /api/ui/skin {
+            expires 15m;
+            proxy_pass http://tenantworkers;
+        }
+
+        location /api/ui/staticbatch {
+            expires max;
+            proxy_pass http://tenantworkers;
+        }
+
+        location /api/ui/widgets {
+            expires 15m;
+            proxy_pass http://tenantworkers;
+        }
+
+        location /api/user/create {
+    <% if rate_limit_api -%>
+            limit_req zone=addr_api_create burst=10;
+    <% end -%>
+
+            expires -1;
+            proxy_next_upstream error http_502;
+            proxy_pass http://tenantworkers;
+        }
+
+        location /api/user/import {
+    <% if rate_limit_api -%>
+            limit_req zone=addr_api_create burst=10;
+    <% end -%>
+
+            expires -1;
+            proxy_read_timeout 300;
+            proxy_next_upstream error http_502;
+            proxy_pass http://tenantworkers;
+        }
+
+        location ~* /api/user/([^\/]+)/picture {
+    <% if rate_limit_api -%>
+            limit_req zone=addr_api_create burst=10;
+    <% end -%>
+
+            expires -1;
+            proxy_read_timeout 60;
+            proxy_next_upstream error http_502;
+            proxy_pass http://tenantworkers;
+        }
+
+        # Explicitly don't cache any other API requests
+        location /api/ {
+    <% if rate_limit_api -%>
+            limit_req zone=addr_api burst=400;
+    <% end -%>
+
+            expires -1;
+            proxy_pass http://tenantworkers;
+        }
 
 
     ####################

@@ -32,12 +32,30 @@ server {
         expires max;
     }
 
-    rewrite ^/favicon.ico /shared/oae/img/favicon.ico last;
+    # HTML files under /avocet/errors are not hashed and should not be cached
+    location ~* /avocet/errors/([^\.]+).html$ {
+        alias <%= app_ui_path %>/avocet/errors/$1.html;
+        expires -1;
+    }
+
+    rewrite ^/accessdenied      /avocet/errors/accessdenied.html last;
+    rewrite ^/maintenance       /avocet/errors/unavailable.html last;
+    rewrite ^/noscript          /avocet/errors/noscript.html last;
+    rewrite ^/notfound          /avocet/errors/notfound.html last;
+    rewrite ^/unavailable       /avocet/errors/unavailable.html last;
+
+    rewrite ^/favicon.ico       /avocet/images/favicon.ico last;
 
 
     #####################
     ## ADMIN RESOURCES ##
     #####################
+
+    location /ui/ {
+        alias <%= app_ui_path %>/ui/;
+        autoindex off;
+        expires max;
+    }
 
     location /admin/ {
         alias <%= app_ui_path %>/admin/;
@@ -52,46 +70,90 @@ server {
     }
 
     rewrite ^/$              /admin/index.html last;
+    rewrite ^/modules        /admin/index.html last;
+    rewrite ^/tenants        /admin/index.html last;
     rewrite ^/tenant/(.*)$   /admin/index.html last;
+
+
+    ######################
+    ## WIDGET RESOURCES ##
+    ######################
+
+    location /node_modules/ {
+        alias <%= app_ui_path %>/node_modules/;
+        autoindex off;
+        expires max;
+    }
+
+
+    #################
+    ## ERROR PAGES ##
+    #################
+
+    error_page      401     /avocet/errors/accessdenied.html;
+    error_page      404     /avocet/errors/notfound.html;
+    error_page      502     /avocet/errors/unavailable.html;
+    error_page      503     /avocet/errors/unavailable.html;
 
 
     #########################
     ## APP SERVER REQUESTS ##
     #########################
 
-    location /api/ui/skin {
-        expires 15m;
-        proxy_pass http://globaladminworkers;
-    }
 
-    location /api/ui/staticbatch {
-        expires max;
-        proxy_pass http://globaladminworkers;
-    }
+        ############
+        ## AVOCET ##
+        ############
 
-    location /api/ui/widgets {
-        expires 15m;
-        proxy_pass http://globaladminworkers;
-    }
+        location /api/journals/import {
+            <% if rate_limit_api -%>
+                limit_req zone=addr_api burst=10;
+            <% end -%>
 
-    location /api/user/import {
-        <% if rate_limit_api -%>
-            limit_req zone=addr_api burst=10;
-        <% end -%>
+            expires -1;
+            proxy_read_timeout 120;
+            proxy_next_upstream error http_502;
+            proxy_pass http://globaladminworkers;
+        }
 
-        expires -1;
-        proxy_read_timeout 300;
-        proxy_next_upstream error http_502;
-        proxy_pass http://globaladminworkers;
-    }
 
-    # Explicitly don't cache any other API requests
-    location /api/ {
-        <% if rate_limit_api -%>
-            limit_req zone=addr_api burst=400;
-        <% end -%>
+        ############
+        ## SHARED ##
+        ############
 
-        expires -1;
-        proxy_pass http://globaladminworkers;
-    }
+        location /api/ui/skin {
+            expires 15m;
+            proxy_pass http://globaladminworkers;
+        }
+
+        location /api/ui/staticbatch {
+            expires max;
+            proxy_pass http://globaladminworkers;
+        }
+
+        location /api/ui/widgets {
+            expires 15m;
+            proxy_pass http://globaladminworkers;
+        }
+
+        location /api/user/import {
+            <% if rate_limit_api -%>
+                limit_req zone=addr_api burst=10;
+            <% end -%>
+
+            expires -1;
+            proxy_read_timeout 300;
+            proxy_next_upstream error http_502;
+            proxy_pass http://globaladminworkers;
+        }
+
+        # Explicitly don't cache any other API requests
+        location /api/ {
+            <% if rate_limit_api -%>
+                limit_req zone=addr_api burst=400;
+            <% end -%>
+
+            expires -1;
+            proxy_pass http://globaladminworkers;
+        }
 }

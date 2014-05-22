@@ -1,18 +1,18 @@
-# == Class: hilary::install::archive
+# == Class: etherpad::install::archive
 #
-# This class is responsible for deploying the Hilary files via a remote archive. It expects that there will be
+# This class is responsible for installing the necessary etherpad files from a remote archive. It expects that there will be
 # both a package and a checksum available at a remote URL.
 #
 # === Parameters
 #
 # [*install_config['url_base']*]
-#   The part of the archive source URI that would come just before the minor version directory. Default: https://s3.amazonaws.com/oae-releases/oae
+#   The part of the archive source URI that would come just before the minor version directory Default: https://s3.amazonaws.com/oae-releases/etherpad
 #
 # [*install_config['url_extension']*]
 #   The extension of the archive, without the filename of the parent directory URI (e.g., tar.gz). Defaults to 'tar.gz'
 #
 # [*install_config['version_major_minor']*]
-#   The major and minor version of the package in the format: "<major>.<minor>" (e.g., 4.2)
+#   The major and minor version of the package in the format: "<major>.<minor>" (e.g., 1.2)
 #
 # [*install_config['version_patch']*]
 #   The patch version of the package (e.g., 0 or 2-<# of commits since tag>-<commit hash>)
@@ -22,15 +22,15 @@
 #
 # [*install_config['checksum_type']*]
 #   The type of checksum (e.g., sha1, md5). Defaults to 'sha1'. It's expected that this is located as a sibling to the package in a file with
-#   `<checksum_type>.txt` suffixed to the end. e.g. https://s3.amazonaws.com/oae-releases/oae/4.2/hilary-4.2.0_node-0.10.15.tar.gz.sha1.txt
+#   `<checksum_type>.txt` suffixed to the end. e.g. https://s3.amazonaws.com/oae-releases/etherpad/1.2/etherpad-1.2.91_node-0.10.15.tar.gz.sha1.txt
 #
-# [*app_root_dir*]
-# 	The target directory to extract the release archive. Defaults to '/opt/oae'
+# [*etherpad_root_dir*]
+#   The target directory to extract the release archive. Defaults to '/opt/etherpad'
 #
-class hilary::install::archive ($install_config, $app_root_dir = '/opt/oae') {
+class etherpad::install::archive ($install_config, $etherpad_root_dir = '/opt/etherpad') {
 
     $_install_config = merge({
-        'url_base' 		=> 'https://s3.amazonaws.com/oae-releases/oae',
+        'url_base'      => 'https://s3.amazonaws.com/oae-releases/etherpad',
         'url_extension' => 'tar.gz',
         'checksum_type' => 'sha1',
     }, $install_config)
@@ -42,7 +42,7 @@ class hilary::install::archive ($install_config, $app_root_dir = '/opt/oae') {
     $version_nodejs         = $_install_config['version_nodejs']
     $checksum_type          = $_install_config['checksum_type']
 
-    $url_filename = "hilary-${version_major_minor}.${version_patch}_node-${version_nodejs}"
+    $url_filename = "etherpad-${version_major_minor}.${version_patch}_node-${version_nodejs}"
     $package_url = "${url_base}/${version_major_minor}/${url_filename}.${url_extension}"
     $checksum_url = "${package_url}.${checksum_type}.txt"
 
@@ -50,7 +50,7 @@ class hilary::install::archive ($install_config, $app_root_dir = '/opt/oae') {
     archive { "${url_filename}":
         ensure          => present,
         url             => $package_url,
-        target          => $app_root_dir,
+        target          => $etherpad_root_dir,
         digest_url      => $checksum_url,
         digest_type     => $checksum_type,
         extension       => $url_extension,

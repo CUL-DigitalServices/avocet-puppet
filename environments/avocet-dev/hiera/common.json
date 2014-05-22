@@ -45,7 +45,7 @@
     "ux_root_dir": "/opt/3akai-ux",
     "ux_install_method": "git",
     "ux_install_config": {"source": "https://github.com/CUL-DigitalServices/avocet-ui.git", "revision": "master"},
-    
+
     "db_cluster_name": "Avocet QA Cluster",
     "db_keyspace": "oae",
     "db_hosts": [ "127.0.0.1" ],
@@ -65,8 +65,7 @@
     "search_index": "0",
     "search_data_dir": "/var/lib/elasticsearch",
     "search_memory_mb": 512,
-    "search_version": "0.20.6",
-    "search_checksum": "8896b1dde95a09f27a3ec7d027f995ec27cd358f",
+    "search_version": "1.1.1",
 
     "etherpad_internal_hosts": [ "127.0.0.1" ],
     "etherpad_index": "%{nodesuffix}",
@@ -133,6 +132,7 @@
     "automation_flickr_api_secret": "unset",
     "automation_slideshare_shared_secret": "unset",
     "automation_slideshare_api_key": "unset",
+    "automation_addendum_url": "/custom/openaccess.cam.ac.uk/CambridgeScholarsAddendum_v1.0-1.docx",
 
     "oaeservice::limits::user_soft_max_files": "8192",
     "oaeservice::limits::user_hard_max_files": "32000"
