@@ -74,6 +74,15 @@ server {
     rewrite ^/tenants        /admin/index.html last;
     rewrite ^/tenant/(.*)$   /admin/index.html last;
 
+    ######################
+    ## AVOCET RESOURCES ##
+    ######################
+
+    location /avocet/ {
+        alias <%= app_ui_path %>/avocet/;
+        autoindex off;
+        expires max;
+    }
 
     ######################
     ## WIDGET RESOURCES ##
