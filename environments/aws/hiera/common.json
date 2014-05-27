@@ -7,7 +7,8 @@
         "::oaeservice::rsyslog",
         "::oaeservice::ssh",
         "::oaeservice::users::admin",
-        "::oaeservice::users::deploy"
+        "::oaeservice::users::deploy",
+	"collectd"
     ],
 
     "nodetype": "%{nodetype}",
@@ -27,52 +28,46 @@
             "pubkey": "AAAAB3NzaC1yc2EAAAADAQABAAABAQDhyCB0i7juODGIUTK0EV0A1TKXJFUIkjIIQzMyQ4RhefZ3FuyX5DdJJuydVCQlbUf3uDIIDPCP851p801swr9Os2beR99AwiMc1yki8jrTQ+7LAFApKQDui07nz5APtZVnibXeKrNIBqCc0Tuv+4J6udk11STe8ASm+XBHB3Q4PIwzCJG9ivEF2VdTxKmc4dbwWAArOOpWubMFJ6bEkp1gyIP2jk1DlGYufsD2aQDdkzSvKwYDGDrsQhmA1bZs1xz+3CxBTU9yM1g1dOgC/95AiNlwpFatC5G1c1CVYs9nJ47zkZo1OCjf4AL8RqQ171KF3obQr1ZbzgxxJZZ2bSEl"
         }
     },
-    "deploy_user_passwd": "$6$KIxK1V/a$HpQSDSjkeh9BKsPWnFJ41pojj3ndVUJlkal8o.dpPxWHLxZYFo44OmwKVj7cm8.enpaiBodlNZ8ix/l2Wm0Ge.",
 
     "web_domain": "openaccess.cam.ac.uk",
     "web_domains_external": ["www.openaccess.cam.ac.uk"],
-    "web_internal_address": "web0",
+    "web_internal_address": "ip-10-13-1-10.eu-west-1.compute.internal",
 
     "app_install_method": "archive",
     "app_install_config": {
-        "url_parent": "https://s3.amazonaws.com/oae-releases/oae/5.0",
-        "url_filename": "hilary-5.0.0_node-0.10.25",
+        "url_parent": "https://avocet-releases.s3.amazonaws.com/oae/0.0",
+        "url_filename": "hilary-0.0.5_node-0.10.26",
         "url_extension": "tar.gz",
-        "checksum": "336d96a83ed60697d818940b2938c979d02f8adc"
+        "checksum": "f411d7df55e9bcd85ceb5fb14c68fdfbd4947eac"
     },
-
-    "app_os_user": "root",
-    "app_os_group": "root",
-    "app_hosts": [ "app0", "app1", "app2", "app3" ],
+    "app_os_user": "www-data",
+    "app_os_group": "www-data",
+    "app_hosts": [ "ip-10-13-10-10.eu-west-1.compute.internal", "ip-10-13-20-10.eu-west-1.compute.internal" ],
     "app_root_dir": "/opt/oae",
-
-    "app_admin_tenant": "admin",
 
     "app_files_parent": "/shared",
     "app_files_dir": "/shared/files",
     "app_files_nfs": {
-        "server": "10.224.14.126",
-        "source_dir": "/zones/nfs/a906ce30-37bb-480c-98a5-794981b27e01/sakai-useruploads"
+        "server": "10.13.10.40",
+        "source_dir": "/srv/nfs/"
     },
     "app_ui_path": "/opt/3akai-ux/optimized",
     "app_use_https": true,
     "app_strict_https": true,
 
-    "circonus_url": "",
-
     "ux_root_dir": "/opt/3akai-ux",
     "ux_install_method": "archive",
     "ux_install_config": {
-        "url_parent": "https://s3.amazonaws.com/oae-releases/oae/5.0",
-        "url_filename": "3akai-ux-5.0.0",
+        "url_parent": "https://avocet-releases.s3.amazonaws.com/oae/0.0",
+        "url_filename": "3akai-ux-0.0.5",
         "url_extension": "tar.gz",
-        "checksum": "632626664edec24e7a97bacaa9ee03335e94876d"
+        "checksum": "b1770675a9e7a5830937cd3a4be7e5adaa2733c5"
     },
 
     "db_cluster_name": "openaccess-cluster",
     "db_keyspace": "openaccess",
-    "db_hosts": [ "db0", "db1", "db2" ],
-    "db_tokens": [ "0", "56713727820156407428984779325531226112", "113427455640312814857969558651062452224" ],
+    "db_hosts": [ "ip-10-13-10-100.eu-west-1.compute.internal", "ip-10-13-20-100.eu-west-1.compute.internal", "ip-10-13-30-100.eu-west-1.compute.internal" ],
+    "db_tokens": ["-9223372036854775808", "-6148914691236517206", "-3074457345618258604"],
     "db_timeout": 5000,
     "db_replication_factor": 3,
     "db_strategy_class": "SimpleStrategy",
@@ -81,10 +76,10 @@
     "db_os_user": "cassandra",
     "db_os_group": "cassandra",
 
-    "pp_os_user": "root",
-    "pp_os_group": "root",
+    "pp_os_user": "www-data",
+    "pp_os_group": "www-data",
 
-    "search_hosts": [ "search0", "search1" ],
+    "search_hosts": [ "ip-10-13-10-50.eu-west-1.compute.internal" ],
     "search_index": "%{nodesuffix}",
     "search_data_dir": "/data/elasticsearch",
     "search_memory_mb": 3072,
@@ -104,12 +99,12 @@
     "etherpad_ep_oae_git_revision": "master",
     "etherpad_enable_abiword": true,
 
-    "cache_host": "proxy0",
+    "cache_host": "ip-10-13-10-20.eu-west-1.compute.internal",
     "cache_port": 6379,
 
     "activitycache_enabled": true,
-    "activitycache_host": "proxy0",
-    "activitycache_port": 6380,
+    "activitycache_host": "ip-10-13-10-20.eu-west-1.compute.internal",
+    "activitycache_port": 6379,
 
     "email_debug": true,
     "email_customEmailTemplatesDir": "null",
@@ -126,7 +121,7 @@
 
     "munin_allowed_regexes": [ "^127\\.0\\.0\\.1$", "^10\\.112\\.3\\.104$", "^75\\.102\\.43\\.87$", "^75\\.102\\.43\\.88$" ],
 
-    "rsyslog_enabled": true,
+    "rsyslog_enabled": false,
     "rsyslog_host": "10.224.14.99",
 
     "driver_tsung_version": "1.4.2",

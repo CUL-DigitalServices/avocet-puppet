@@ -1,8 +1,7 @@
 {
     "classes": [
         "::oaeservice::postfix",
-        "::oaeservice::cassandra::dse",
-        "::oaeservice::backup::cassandra"
+        "::oaeservice::cassandra::dsc"
     ],
 
     "duplicity::params::excludes": ["**/snapshots"],

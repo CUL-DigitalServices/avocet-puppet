@@ -3,8 +3,12 @@
         "::oaeservice::deps::package::openjdk6",
         "::oaeservice::deps::package::samlparser",
         "::oaeservice::hilary",
-        "::oaeservice::hilary::files",
         "::oaeservice::ui",
-        "::localconfig::ordering::app"
-    ]
+        "::oaeservice::postfix"
+    ],
+
+    "hilary::config_previews_enabled": true,
+    "hilary::config_activity_enabled": true,
+    
+    "email_debug": false
 }
