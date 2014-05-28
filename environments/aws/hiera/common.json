@@ -35,7 +35,7 @@
 
     "app_install_method": "archive",
     "app_install_config": {
-        "url_parent": "https://avocet-releases.s3.amazonaws.com/oae/0.0",
+        "url_base": "https://avocet-releases.s3.amazonaws.com/oae",
         "url_filename": "hilary-0.0.5_node-0.10.26",
         "url_extension": "tar.gz",
         "checksum": "f411d7df55e9bcd85ceb5fb14c68fdfbd4947eac",
@@ -61,7 +61,7 @@
     "ux_root_dir": "/opt/3akai-ux",
     "ux_install_method": "archive",
     "ux_install_config": {
-        "url_parent": "https://avocet-releases.s3.amazonaws.com/oae/0.0",
+        "url_base": "https://avocet-releases.s3.amazonaws.com/oae",
         "url_filename": "3akai-ux-0.0.5",
         "url_extension": "tar.gz",
         "checksum": "b1770675a9e7a5830937cd3a4be7e5adaa2733c5",
