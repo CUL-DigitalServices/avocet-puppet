@@ -38,7 +38,10 @@
         "url_parent": "https://avocet-releases.s3.amazonaws.com/oae/0.0",
         "url_filename": "hilary-0.0.5_node-0.10.26",
         "url_extension": "tar.gz",
-        "checksum": "f411d7df55e9bcd85ceb5fb14c68fdfbd4947eac"
+        "checksum": "f411d7df55e9bcd85ceb5fb14c68fdfbd4947eac",
+        "version_major_minor": "0.0",                                                                                                                                                                 
+        "version_patch": "5",                                                                                                                                                                         
+        "version_nodejs": "0.10.26"
     },
     "app_os_user": "www-data",
     "app_os_group": "www-data",
@@ -61,7 +64,9 @@
         "url_parent": "https://avocet-releases.s3.amazonaws.com/oae/0.0",
         "url_filename": "3akai-ux-0.0.5",
         "url_extension": "tar.gz",
-        "checksum": "b1770675a9e7a5830937cd3a4be7e5adaa2733c5"
+        "checksum": "b1770675a9e7a5830937cd3a4be7e5adaa2733c5",
+        "version_major_minor": "0.0",                                                                                                                                                                 
+        "version_patch": "5"                                                                                                                                                                         
     },
 
     "db_cluster_name": "openaccess-cluster",
