@@ -49,13 +49,13 @@ server {
         expires -1;
     }
 
-    rewrite ^/accessdenied      /avocet/errors/accessdenied.html last;
-    rewrite ^/maintenance       /avocet/errors/unavailable.html last;
-    rewrite ^/noscript          /avocet/errors/noscript.html last;
-    rewrite ^/notfound          /avocet/errors/notfound.html last;
-    rewrite ^/unavailable       /avocet/errors/unavailable.html last;
+    rewrite ^/accessdenied$      /avocet/errors/accessdenied.html last;
+    rewrite ^/maintenance$       /avocet/errors/unavailable.html last;
+    rewrite ^/noscript$          /avocet/errors/noscript.html last;
+    rewrite ^/notfound$          /avocet/errors/notfound.html last;
+    rewrite ^/unavailable$       /avocet/errors/unavailable.html last;
 
-    rewrite ^/favicon.ico       /avocet/images/favicon.ico last;
+    rewrite ^/favicon.ico$       /avocet/images/favicon.ico last;
 
 
     #####################
@@ -80,12 +80,12 @@ server {
     rewrite ^/admin/skinning  /admin/index.html last;
 
 
-    #######################
-    ## MAIN UI RESOURCES ##
-    #######################
+    ##############################
+    ## OPEN ACCESS UI RESOURCES ##
+    ##############################
 
-    location /custom/ {
-        alias <%= app_ui_path %>/custom/;
+    location /custom/openaccess.cam.ac.uk/ {
+        alias <%= app_ui_path %>/custom/openaccess.cam.ac.uk/;
         autoindex off;
         expires max;
     }
@@ -107,12 +107,12 @@ server {
         expires -1;
     }
 
-    rewrite ^/$              /avocet/index.html last;
-    rewrite ^/me$            /avocet/me.html last;
-    rewrite ^/publication    /avocet/publication.html last;
-    rewrite ^/changing       /avocet/changing.html last;
-    rewrite ^/todo           /avocet/todo.html last;
-    rewrite ^/openaccess     /avocet/openaccess.html last;
+    rewrite ^/$                                            /avocet/index.html last;
+    rewrite ^/me$                                          /avocet/me.html last;
+    rewrite ^/publications/([^/]+)/([^/]+)/?$              /avocet/publications.html last;
+    rewrite ^/what-is-changing$                            /avocet/what-is-changing.html last;
+    rewrite ^/what-do-i-need-to-do$                        /avocet/what-do-i-need-to-do.html last;
+    rewrite ^/what-is-open-access$                         /avocet/what-is-open-access.html last;
 
 
     ######################

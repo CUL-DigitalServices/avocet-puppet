@@ -38,13 +38,13 @@ server {
         expires -1;
     }
 
-    rewrite ^/accessdenied      /avocet/errors/accessdenied.html last;
-    rewrite ^/maintenance       /avocet/errors/unavailable.html last;
-    rewrite ^/noscript          /avocet/errors/noscript.html last;
-    rewrite ^/notfound          /avocet/errors/notfound.html last;
-    rewrite ^/unavailable       /avocet/errors/unavailable.html last;
+    rewrite ^/accessdenied$      /avocet/errors/accessdenied.html last;
+    rewrite ^/maintenance$       /avocet/errors/unavailable.html last;
+    rewrite ^/noscript$          /avocet/errors/noscript.html last;
+    rewrite ^/notfound$          /avocet/errors/notfound.html last;
+    rewrite ^/unavailable$       /avocet/errors/unavailable.html last;
 
-    rewrite ^/favicon.ico       /avocet/images/favicon.ico last;
+    rewrite ^/favicon.ico$       /avocet/images/favicon.ico last;
 
 
     #####################
