@@ -9,8 +9,6 @@ echo "Nightly Run: `date`"
 echo "========================================================="
 echo ""
 
-
-
 echo "Shutting down services..."
 <%= scripts_dir %>/shutdown.sh
 
@@ -23,7 +21,6 @@ echo "Restoring services with puppet"
 #puppet agent -t
 cd /opt/puppet-hilary
 puppet apply --verbose --debug --modulepath environments/avocet-dev/modules:modules:/etc/puppet/modules --certname dev0 --environment avocet-dev --hiera_config /etc/puppet/hiera.yaml site.pp
-
 
 echo ""
 echo "Performing production build (this will take a little while)"
@@ -51,37 +48,79 @@ sleep $DELAY
 # Restarting nginx so it finds the app server up quicker
 service nginx restart
 
-# Create an 'oae' tenant.
+cd <%= scripts_dir %>
+
+# Install/Update oaesh
 echo ""
-echo "Creating an 'oae' tenant and disabling reCaptcha"
-ADMIN_COOKIE=$(curl -s -e "/" --cookie-jar - -d"username=administrator" -d"password=administrator" http://<%= admin_host %>/api/auth/login | grep connect.sess | cut -f 7)
-curl --cookie connect.sess=${ADMIN_COOKIE} -e "/" -d "alias=cam" -d"displayName=Cambridge" -d"host=ec2-54-73-99-234.eu-west-1.compute.amazonaws.com" http://<%= admin_host %>/api/tenant/create
+echo "Updating oaesh"
+npm install -g oaesh
+
+# Create a tenant
+echo ""
+echo "Creating tenant"
+oaesh -U http://<%= admin_host %> -u administrator -p administrator -- \
+    exec -m POST "/api/tenant/create" -d "alias=cam" -d "displayName=Cambridge" -d "host=ec2-54-73-99-234.eu-west-1.compute.amazonaws.com"
 
 # Disable reCaptcha
-curl --cookie connect.sess=${ADMIN_COOKIE} -e "/" -d "oae-principals/recaptcha/enabled=false" http://<%= admin_host %>/api/config/cam
+echo ""
+echo "Disabling reCaptcha"
+oaesh -U http://<%= admin_host %> -u administrator -p administrator -- \
+    config-set \
+        -k "oae-principals/recaptcha/enabled=false"
 
 if [ "<%= flickr_api_key %>" != "unset" ] ; then
     # Configuring the Flickr and SlideShare Preview Processor
-    curl --cookie connect.sess=${ADMIN_COOKIE} -e "/" -d"oae-preview-processor/flickr/apikey=<%=flickr_api_key %>" -d"oae-preview-processor/flickr/apisecret=<%=flickr_api_secret %>" -d"oae-preview-processor/slideshare/sharedsecret=<%=slideshare_shared_secret %>" -d"oae-preview-processor/slideshare/apikey=<%= slideshare_api_key %>" http://<%= admin_host %>/api/config
+    oaesh -U http://<%= admin_host %> -u administrator -p administrator -- \
+        config-set \
+            -k "oae-preview-processor/flickr/apikey=<%=flickr_api_key %>" \
+            -k "oae-preview-processor/flickr/apisecret=<%=flickr_api_secret %>" \
+            -k "oae-preview-processor/slideshare/sharedsecret=<%=slideshare_shared_secret %>" \
+            -k "oae-preview-processor/slideshare/apikey=<%= slideshare_api_key %>"
 fi
 
-# Enable uploading publications
-curl --cookie connect.sess=${ADMIN_COOKIE} -e "/" -d "oae-publications/publications/allowUserEntry=true" http://<%= admin_host %>/api/config/cam
-
 # Disable local strategy
-curl --cookie connect.sess=${ADMIN_COOKIE} -e "/" -d "oae-authentication/local/allowAccountCreation=false" -d "oae-authentication/local/enabled=false" http://<%= admin_host %>/api/config/cam
+echo ""
+echo "Disabling local strategy"
+oaesh -U http://<%= admin_host %> -u administrator -p administrator -- \
+    config-set \
+        -k "oae-authentication/local/allowAccountCreation=false" \
+        -k "oae-authentication/local/enabled=false"
 
 # Disable Twitter strategy
-curl --cookie connect.sess=${ADMIN_COOKIE} -e "/" -d "oae-authentication/twitter/enabled=false" http://<%= admin_host %>/api/config/cam
+echo ""
+echo "Disabling Twitter strategy"
+oaesh -U http://<%= admin_host %> -u administrator -p administrator -- \
+    config-set \
+        -k "oae-authentication/twitter/enabled=false"
 
 # Enable the Google strategy
-curl --cookie connect.sess=${ADMIN_COOKIE} -e "/" -d "oae-authentication/google/enabled=true" -d"oae-authentication/google/key=832766182042-er6qqh5nqitn30oqrtad7mvgcadl6dcr.apps.googleusercontent.com" -d"oae-authentication/google/secret=MKo6exTvIM8_tiJDt1t4zYWz" http://<%= admin_host %>/api/config/cam
+echo ""
+echo "Enabling Google strategy"
+oaesh -U http://<%= admin_host %> -u administrator -p administrator -- \
+    config-set \
+        -k "oae-authentication/google/enabled=true" \
+        -k "oae-authentication/google/key=832766182042-er6qqh5nqitn30oqrtad7mvgcadl6dcr.apps.googleusercontent.com" \
+        -k "oae-authentication/google/secret=MKo6exTvIM8_tiJDt1t4zYWz"
 
 # Upload the departments
-curl --cookie connect.sess=${ADMIN_COOKIE} -e "/" -F "departments=@/opt/scripts/departments.csv" -F"tenantAlias=cam" http://admin.dev0.avocet.cam.ac.uk/api/departments/import
+echo ""
+echo "Uploading departments for tenant"
+oaesh -U http://<%= admin_host %> -u administrator -p administrator -- \
+    exec -m POST "/api/departments/import" \
+       -d "tenantAlias=cam" \
+       -F "departments=/opt/scripts/departments.csv"
 
 # Upload the journals
-curl --cookie connect.sess=${ADMIN_COOKIE} -e "/" -F"journals=@/opt/scripts/journals.csv" http://admin.dev0.avocet.cam.ac.uk/api/journals/import
+echo ""
+echo "Uploading journals"
+oaesh -U http://<%= admin_host %> -u administrator -p administrator -- \
+    exec \
+        -m POST "/api/journals/import" \
+        -F "journals=/opt/scripts/journals.csv"
 
 # Set the addendum download url
-curl --cookie connect.sess=${ADMIN_COOKIE} -e "/" -d "oae-tickets/general/addendumUrl=<%= addendum_url %>" http://<%= admin_host %>/api/config/cam
+echo ""
+echo "Configuring addendum url"
+oaesh -U http://<%= admin_host %> -u administrator -p administrator -- \
+    config-set \
+        -k "oae-publications/general/addendumUrl=<%= addendum_url %>"
