@@ -1,7 +1,8 @@
 {
     "classes": [
         "::oaeservice::postfix",
-        "::oaeservice::cassandra::dsc"
+        "::oaeservice::cassandra::dsc",
+        "::oaeservice::elasticsearch"
     ],
 
     "duplicity::params::excludes": ["**/snapshots"],
