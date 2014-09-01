@@ -37,8 +37,8 @@
     "app_install_config": {
         "url_base": "https://avocet-releases.s3.amazonaws.com/oae",
         "version_major_minor": "0.0",                                                                                                                                                                 
-        "version_patch": "8-1-39fe0d4",                                                                                                                                                                         
-        "version_nodejs": "0.10.26"
+        "version_patch": "9",                                                                                                                                                                         
+        "version_nodejs": "0.10.30"
     },
     "app_os_user": "www-data",
     "app_os_group": "www-data",
@@ -60,7 +60,7 @@
     "ux_install_config": {
         "url_base": "https://avocet-releases.s3.amazonaws.com/oae",
         "version_major_minor": "0.0",                                                                                                                                                                 
-        "version_patch": "8"                                                                                                                                                                         
+        "version_patch": "9"                                                                                                                                                                         
     },
 
     "db_cluster_name": "openaccess-cluster",
