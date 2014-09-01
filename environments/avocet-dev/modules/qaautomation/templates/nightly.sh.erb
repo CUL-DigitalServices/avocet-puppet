@@ -102,6 +102,26 @@ oaesh -U http://<%= admin_host %> -u administrator -p administrator -- \
         -k "oae-authentication/google/key=832766182042-er6qqh5nqitn30oqrtad7mvgcadl6dcr.apps.googleusercontent.com" \
         -k "oae-authentication/google/secret=MKo6exTvIM8_tiJDt1t4zYWz"
 
+# Enable Feedbackify
+echo ""
+echo "Enabling Feedbackify"
+oaesh -U http://<%= admin_host %> -u administrator -p administrator -- \
+    config-set \
+        -k "oae-feedbackify/feedbackify/enabled=true" \
+        -k "oae-feedbackify/feedbackify/formId=7625" \
+        -k "oae-feedbackify/feedbackify/widgetEnabled=true" \
+        -k "oae-feedbackify/feedbackify/widgetColor=#CB4F00" \
+        -k "oae-feedbackify/feedbackify/widgetPosition=left" \
+        -k "oae-feedbackify/feedbackify/widgetBodyClass=oa-feedbackify"
+
+# Enable Google Analytics
+echo ""
+echo "Enabling Google Analytics"
+oaesh -U http://<%= admin_host %> -u administrator -p administrator -- \
+    config-set \
+        -k "oae-google-analytics/google-analytics/tenantEnabled=true" \
+        -k "oae-google-analytics/google-analytics/tenantTrackingId=UA-50943956-3" \
+
 # Upload the departments
 echo ""
 echo "Uploading departments for tenant"

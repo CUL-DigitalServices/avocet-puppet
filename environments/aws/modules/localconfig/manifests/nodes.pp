@@ -15,7 +15,11 @@ node 'ip-10-13-1-10.eu-west-1.compute.internal' inherits web {
 node 'ip-10-13-10-10.eu-west-1.compute.internal' inherits app {
   $nodesuffix = 0
   hiera_include(classes)
-#  include test
+}
+
+node 'ip-10-13-10-11.eu-west-1.compute.internal' inherits app {
+  $nodesuffix = 0
+  hiera_include(classes)
 }
 
 node 'ip-10-13-20-10.eu-west-1.compute.internal' inherits app {
@@ -47,6 +51,11 @@ node 'ip-10-13-30-100.eu-west-1.compute.internal' inherits db {
 ##################
 
 node 'ip-10-13-10-50.eu-west-1.compute.internal' inherits search {
+  $nodesuffix = 0
+  hiera_include(classes)
+}
+
+node 'ip-10-13-10-150.eu-west-1.compute.internal' inherits search {
   $nodesuffix = 0
   hiera_include(classes)
 }

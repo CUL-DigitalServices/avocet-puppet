@@ -25,27 +25,24 @@
             "pubkey": "AAAAB3NzaC1yc2EAAAABIwAAAgEAwPD3odJejHkT38r07Hwp8o/fPOV1lS6YfJcv7SjmJsL4fDiYJ4Uj+FM0fWhoc1Ud5ibowjWZ22f4rqcXGEGe61XD5CPs++xOhGD+4k3ZPuij0SAM6HqdrGT/vhIEcwxmT7xxSEPnenJ3N2dsRhP3YQUijgYBPEhEh9oa2bs5n9VbdUhguZGnuJB7+lxTyCdyMNX+4jv7MmvolksUfpc2bR4NpziPE6Ifrse/Jd2qi+9EES1xclNGROfyDYplYd0XAh2/I7L3rEzlCVpFoVAgaGmE7EKXwpTbHw4/wen89NDlkP4idvWz+mDRTYtCSgzJMKxb1AuVujNA/NB78boTcLs62n9C3VlDguNc1DL8PPS6xZXPr0EQxiKeS+1/p8Bmn41m8nqlHLm1LqaWY0grPNY9BkH8mBwQnmF1LaO8/kosleDbAhSgwU4Qvu3HN/4ql9BBkodX7xclO9dNfvUteMHZSc9FhtuddBhPewPV1/HiaH7he3ambpi4ox5vFKdtdC2bt5zH2cR+KoUl+Ra92XouO2KxLG14XBJ3sQQZuxAsNKr8gx2qzLwCKkEtBX7pt4cmKSwp88fzD6ZoyhsJeQhZrqyI+O4xySL1EMvGYTmGSyyigooCZM7CeuVX6NQr1uTMKt56GTzQ9W49TwFslEFw4rgwGCmhtaAaOO4lUSM="
         },
         "ts551": {
-            "pubkey": "AAAAB3NzaC1yc2EAAAADAQABAAABAQDhyCB0i7juODGIUTK0EV0A1TKXJFUIkjIIQzMyQ4RhefZ3FuyX5DdJJuydVCQlbUf3uDIIDPCP851p801swr9Os2beR99AwiMc1yki8jrTQ+7LAFApKQDui07nz5APtZVnibXeKrNIBqCc0Tuv+4J6udk11STe8ASm+XBHB3Q4PIwzCJG9ivEF2VdTxKmc4dbwWAArOOpWubMFJ6bEkp1gyIP2jk1DlGYufsD2aQDdkzSvKwYDGDrsQhmA1bZs1xz+3CxBTU9yM1g1dOgC/95AiNlwpFatC5G1c1CVYs9nJ47zkZo1OCjf4AL8RqQ171KF3obQr1ZbzgxxJZZ2bSEl"
+            "pubkey": "AAAAB3NzaC1yc2EAAAADAQABAAABAQDR8L1BI/C5P899ZSeCTSTIIqec5Q3kmLZP5yASWCgCaF0DS22FxtRsxx1xceFTBEKkbrc2T3Np2uE70hQXRnK5Jp+L1d/l/O44RANtlbK55Nk90N//5auAHiPij1nhM3SqyxrsYpvnkDww1KYmysk9YpuEhTpa50tMyQx7aOUUU8KBIENKqh6ovqaotCcUQxV3EFjh+D4+TGKMpsiJwM+52tbddLor2qaFLzWTowG3Ln1fneD6QTNQlMBVWFEyAZTGC9F2+BNMFON8TEJ21RVuOxDvLpFhALKVbLwzrG3Nfvz0s+j2Sb5wd5jJ3nkyZ75jxpx/w978Ly5BaW1KNebb"
         }
     },
 
     "web_domain": "openaccess.cam.ac.uk",
     "web_domains_external": ["www.openaccess.cam.ac.uk"],
-    "web_internal_address": "ip-10-13-1-10.eu-west-1.compute.internal",
+    "web_internal_address": "ip-10-13-1-11.eu-west-1.compute.internal",
 
     "app_install_method": "archive",
     "app_install_config": {
         "url_base": "https://avocet-releases.s3.amazonaws.com/oae",
-        "url_filename": "hilary-0.0.5_node-0.10.26",
-        "url_extension": "tar.gz",
-        "checksum": "f411d7df55e9bcd85ceb5fb14c68fdfbd4947eac",
         "version_major_minor": "0.0",                                                                                                                                                                 
-        "version_patch": "5",                                                                                                                                                                         
+        "version_patch": "8-1-39fe0d4",                                                                                                                                                                         
         "version_nodejs": "0.10.26"
     },
     "app_os_user": "www-data",
     "app_os_group": "www-data",
-    "app_hosts": [ "ip-10-13-10-10.eu-west-1.compute.internal", "ip-10-13-20-10.eu-west-1.compute.internal" ],
+    "app_hosts": [ "ip-10-13-1-11.eu-west-1.compute.internal", "ip-10-13-2-11.eu-west-1.compute.internal" ],
     "app_root_dir": "/opt/oae",
 
     "app_files_parent": "/shared",
@@ -62,16 +59,13 @@
     "ux_install_method": "archive",
     "ux_install_config": {
         "url_base": "https://avocet-releases.s3.amazonaws.com/oae",
-        "url_filename": "3akai-ux-0.0.5",
-        "url_extension": "tar.gz",
-        "checksum": "b1770675a9e7a5830937cd3a4be7e5adaa2733c5",
         "version_major_minor": "0.0",                                                                                                                                                                 
-        "version_patch": "5"                                                                                                                                                                         
+        "version_patch": "8"                                                                                                                                                                         
     },
 
     "db_cluster_name": "openaccess-cluster",
     "db_keyspace": "openaccess",
-    "db_hosts": [ "ip-10-13-10-100.eu-west-1.compute.internal", "ip-10-13-20-100.eu-west-1.compute.internal", "ip-10-13-30-100.eu-west-1.compute.internal" ],
+    "db_hosts": [ "ip-10-13-10-150.eu-west-1.compute.internal", "ip-10-13-20-150.eu-west-1.compute.internal", "ip-10-13-30-150.eu-west-1.compute.internal" ],
     "db_tokens": ["-9223372036854775808", "-6148914691236517206", "-3074457345618258604"],
     "db_timeout": 5000,
     "db_replication_factor": 3,
@@ -84,15 +78,14 @@
     "pp_os_user": "www-data",
     "pp_os_group": "www-data",
 
-    "search_hosts": [ "ip-10-13-10-50.eu-west-1.compute.internal" ],
+    "search_hosts": [ "ip-10-13-10-150.eu-west-1.compute.internal", "ip-10-13-20-150.eu-west-1.compute.internal", "ip-10-13-30-150.eu-west-1.compute.internal" ],
     "search_index": "%{nodesuffix}",
     "search_data_dir": "/data/elasticsearch",
-    "search_memory_mb": 3072,
+    "search_memory_mb": 2048,
     "search_newsize_mb": 1024,
-    "search_version": "0.20.6",
-    "search_checksum": "8896b1dde95a09f27a3ec7d027f995ec27cd358f",
+    "search_version": "1.1.1",
 
-    "etherpad_internal_hosts": [ "etherpad0", "etherpad1", "etherpad2" ],
+    "etherpad_internal_hosts": [ ],
     "etherpad_index": "%{nodesuffix}",
     "etherpad_api_key": "LSKDFJA0W9FJAOSIDFJ",
     "etherpad_session_key": "YzI3znrSsxByU1QsRtPZhX6tkxVUoQh1suIDrUcBtewrsBDLPkGRTP6oUqhL",
@@ -104,11 +97,11 @@
     "etherpad_ep_oae_git_revision": "master",
     "etherpad_enable_abiword": true,
 
-    "cache_host": "ip-10-13-10-20.eu-west-1.compute.internal",
+    "cache_host": "ip-10-13-1-11.eu-west-1.compute.internal",
     "cache_port": 6379,
 
     "activitycache_enabled": true,
-    "activitycache_host": "ip-10-13-10-20.eu-west-1.compute.internal",
+    "activitycache_host": "ip-10-13-2-11.eu-west-1.compute.internal",
     "activitycache_port": 6379,
 
     "email_debug": true,
@@ -122,7 +115,7 @@
     "email_smtp_pass": "unset",
     "email_blacklisted_domains": ["example.com", "localhost", "127.0.0.1"],
 
-    "mq_hosts": [ "ip-10-13-10-30.eu-west-1.compute.internal" ],
+    "mq_hosts": [ "ip-10-13-1-11.eu-west-1.compute.internal", "ip-10-13-2-11.eu-west-1.compute.internal" ],
 
     "munin_allowed_regexes": [ "^127\\.0\\.0\\.1$", "^10\\.112\\.3\\.104$", "^75\\.102\\.43\\.87$", "^75\\.102\\.43\\.88$" ],
 
