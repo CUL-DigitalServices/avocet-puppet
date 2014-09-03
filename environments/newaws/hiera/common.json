@@ -7,8 +7,7 @@
         "::oaeservice::rsyslog",
         "::oaeservice::ssh",
         "::oaeservice::users::admin",
-        "::oaeservice::users::deploy",
-	"collectd"
+        "::oaeservice::users::deploy"
     ],
 
     "nodetype": "%{nodetype}",
