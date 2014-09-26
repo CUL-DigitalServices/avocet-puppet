@@ -12,6 +12,7 @@
     "duplicity::params::minute": 0,
     "duplicity::params::full_if_older_than": "30D",
     "duplicity::params::remove_older_than": "3M",
+    "duplicity::params::pubkey_id": "8182BE6E",
     "duplicity::params::mail_to": "ph448@cam.ac.uk",
     "duplicity::params::mail_subject_success": "[cassandra backup] SUCCESS: Successfully backed up database to S3",
     "duplicity::params::mail_subject_error": "[cassandra backup] ERROR: Failed to back up database to S3",
