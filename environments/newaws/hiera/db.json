@@ -2,6 +2,7 @@
     "classes": [
         "::oaeservice::postfix",
         "::oaeservice::cassandra::dsc",
+        "::oaeservice::backup::cassandra",
         "::oaeservice::elasticsearch"
     ],
 
