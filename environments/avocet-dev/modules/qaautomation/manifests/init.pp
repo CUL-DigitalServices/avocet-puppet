@@ -58,6 +58,11 @@ class qaautomation ($log_file_path = '/var/log/nightly.log') {
         content => template('qaautomation/departments.csv'),
     }
 
+    file { 'termsandconditions.md':
+        path => "${scripts_dir}/termsandconditions.md",
+        content => template('qaautomation/termsandconditions.md')
+    }
+
     file { 'nightly.sh':
         path => "${scripts_dir}/nightly.sh",
         mode => 0755,
