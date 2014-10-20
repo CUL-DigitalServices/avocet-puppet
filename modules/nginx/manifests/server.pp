@@ -2,7 +2,7 @@ define nginx::server (
     $ssl_crt_source     = "puppet:///modules/localconfig/ssl/${name}/server.crt",
     $ssl_key_source     = "puppet:///modules/localconfig/ssl/${name}/server.key",
     $server_name        = $name,
-    $template           = 'nginx/user_tenant_nginx.conf.erb',) {
+    $template           = 'nginx/user_tenant_nginx.conf.erb') {
 
     # Ensure the top-level nginx class exists
     include ::nginx
@@ -35,7 +35,7 @@ define nginx::server (
         ssl_crt_source  => $ssl_crt_source,
         ssl_crt_path    => $ssl_crt_path,
         ssl_key_source  => $ssl_key_source,
-        ssl_key_path    => $ssl_key_path,
+        ssl_key_path    => $ssl_key_path
     }
 
 
@@ -53,6 +53,6 @@ define nginx::server (
         mode    => 0640,
         owner   => $owner,
         group   => $group,
-        content => template($template),
+        content => template($template)
     }
 }

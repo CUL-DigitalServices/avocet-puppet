@@ -1,0 +1,23 @@
+<% if ssl_policy ==  'redirect_http' -%>
+server {
+    listen              80;
+    server_name         stats.dev0.avocet.cam.ac.uk;
+    return              301 https://$host$request_uri;
+}
+<% end -%>
+
+server {
+<% if ssl_policy == 'allow_http' -%>
+    listen              80;
+<% end -%>
+    listen              443 ssl;
+    root                /opt/stats;
+    server_name         stats.dev0.avocet.cam.ac.uk;
+
+    ssl_certificate     <%= ssl_crt_path %>;
+    ssl_certificate_key <%= ssl_key_path %>;
+
+    location / {
+        autoindex       on;
+    }
+}

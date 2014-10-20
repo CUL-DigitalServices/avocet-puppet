@@ -4,6 +4,6 @@ class localconfig::ordering {
     Class['::oaeservice::ui']               -> Class['::hilary']
     Class['::redis']                        -> Class['::hilary']
     Class['::elasticsearch']                -> Class['::hilary']
-    Class['::cassandra']               -> Class['::hilary']
+    Class['::cassandra']                    -> Class['::hilary']
     Class['::rabbitmq::server']             -> Class['::hilary']
 }

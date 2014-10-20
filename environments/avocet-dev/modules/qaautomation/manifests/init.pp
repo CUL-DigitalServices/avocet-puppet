@@ -32,7 +32,6 @@ class qaautomation ($log_file_path = '/var/log/nightly.log') {
     $app_admin_tenant = hiera('app_admin_tenant', 'admin')
     $admin_host = "${app_admin_tenant}.${web_domain}"
 
-
     $flickr_api_key = hiera('automation_flickr_api_key')
     $flickr_api_secret = hiera('automation_flickr_api_secret')
     $slideshare_shared_secret = hiera('automation_slideshare_shared_secret')

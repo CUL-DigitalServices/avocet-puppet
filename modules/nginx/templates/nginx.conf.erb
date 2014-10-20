@@ -64,22 +64,22 @@ http {
     ## LOAD BALANCING ##
     ####################
 
+
     upstream globaladminworkers {
-<% internal_app_ips.each do |ip| -%>
+    <% internal_app_ips.each do |ip| -%>
         server <%= ip %>:2000   max_fails=3 fail_timeout=30s;
-<% end -%>
+    <% end -%>
 
         keepalive 64;
     }
 
     upstream tenantworkers {
-<% internal_app_ips.each do |ip| -%>
+    <% internal_app_ips.each do |ip| -%>
         server <%= ip %>:2001   max_fails=3 fail_timeout=30s;
-<% end -%>
+    <% end -%>
 
         keepalive 64;
     }
-
 
     # Include all the host-specific configs
     include <%= nginx_conf_dir %>/*.conf;

@@ -1,0 +1,13 @@
+description "kibana"
+
+start on started networking
+stop on runlevel [!2345]
+
+env EPHOME=<%= stats_dir %>
+
+respawn
+
+script
+  cd $EPHOME/
+  exec su -s /bin/kibana
+end script

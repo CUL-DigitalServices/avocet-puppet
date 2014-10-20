@@ -24,6 +24,7 @@
 
     "app_signing_key": "A;SLDFJ984FJW398FJWP4GO5IJSLRTKGJ",
     "app_cookie_secret": "SODIFJ984FJA984JAFP98WF4PAW984F984FJ9",
+    "app_admin_tenant": "admin",
 
     "app_files_parent": "/mnt",
     "app_files_dir": "/mnt/files",
@@ -41,10 +42,20 @@
     },
     "app_ui_path": "/opt/3akai-ux",
 
-
     "ux_root_dir": "/opt/3akai-ux",
     "ux_install_method": "git",
-    "ux_install_config": {"source": "https://github.com/CUL-DigitalServices/avocet-ui.git", "revision": "master"},
+    "ux_install_config": {
+        "source": "https://github.com/CUL-DigitalServices/avocet-ui.git",
+        "revision": "master"
+    },
+
+    "stats_dir": "/opt/stats",
+    "stats_install_method": "archive",
+    "stats_install_config": {
+        "url_base": "https://download.elasticsearch.org/kibana/kibana",
+        "url_extension": "tar.gz",
+        "version_major_minor": "4.0.0-BETA1.1"
+    },
 
     "db_cluster_name": "Avocet QA Cluster",
     "db_keyspace": "oae",
@@ -104,6 +115,9 @@
 
     "rsyslog_enabled": false,
     "rsyslog_host": "127.0.0.1",
+
+    "logstash_enabled": true,
+    "logstash_host": "127.0.0.1",
 
     "driver_tsung_version": "1.4.2",
 

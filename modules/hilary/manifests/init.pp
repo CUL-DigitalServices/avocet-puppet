@@ -43,6 +43,7 @@ class hilary (
 
     # Logging
     $config_log_syslog_ip             = false,
+    $config_log_logstash_ip           = "127.0.0.1",
 
     # Telemetry
     $config_telemetry_circonus_url,

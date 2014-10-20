@@ -26,6 +26,13 @@ class oaeservice::hilary {
     $rsyslog_host = false
   }
 
+  $logstash_enabled = hiera('logstash_enabled', false)
+  if $logstash_enabled {
+    $logstash_host = hiera('logstash_host')
+  } else {
+    $logstash_host = false
+  }
+
   $activitycache_enabled = hiera('activitycache_enabled', false)
   if $activitycache_enabled {
     $activitycache_host = hiera('activitycache_host')
@@ -76,6 +83,8 @@ class oaeservice::hilary {
     config_log_syslog_ip              => $rsyslog_host,
     config_activity_redis_host        => $activitycache_host,
     config_activity_redis_port        => $activitycache_port,
+
+    config_log_logstash_ip            => $logstash_host,
 
     config_email_debug                      => hiera('email_debug'),
     config_email_customEmailTemplatesDir    => hiera('email_customEmailTemplatesDir'),

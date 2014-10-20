@@ -3,7 +3,9 @@ class nginx (
     $internal_etherpad_ips,
     $web_domain,
     $app_admin_tenant               = 'admin',
+    $app_stats_tenant               = 'stats',
     $app_ui_path                    = '/opt/3akai-ux',
+    $stats_dir                      = '/opt/stats',
     $files_home                     = '/opt/files',
     $owner                          = 'nginx',
     $group                          = 'nginx',
@@ -94,6 +96,17 @@ class nginx (
         group   => $group,
         content => template('nginx/nginx.mime.types'),
         require => $nginx_config_requires,
+    }
+
+
+    ################################
+    ## STATS TENANT CONFIGURATION ##
+    ################################
+
+    nginx::server { "${app_stats_tenant}.${web_domain}":
+        ssl_crt_source  => $ssl_default_crt_source,
+        ssl_key_source  => $ssl_default_key_source,
+        template        => 'nginx/stats_tenant_nginx.conf.erb'
     }
 
 

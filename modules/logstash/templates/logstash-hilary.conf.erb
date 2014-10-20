@@ -1,0 +1,14 @@
+input {
+    syslog {
+        host => "127.0.0.1"
+        port => 5505
+        type => "raw"
+    }
+}
+
+output {
+    elasticsearch {
+        host => localhost
+        protocol => http
+    }
+}
