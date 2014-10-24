@@ -1,0 +1,287 @@
+CAIUS,Gonville and Caius College
+CATH,St Catharine's College
+CHRISTS,Christ's College
+CHURCH,Churchill College
+CLARE,Clare College
+CLAREH,Clare Hall
+CONFCAM,Conference Cambridge
+CORPUS,Corpus Christi College
+DARWIN,Darwin College
+DOWN,Downing College
+EDMUND,St Edmund's College
+FARADAY,Faraday Institute
+HUGEL,Von Hugel Institute
+EMM,Emmanuel College
+FITZ,Fitzwilliam College
+FTHEO,Cambridge Theological Federation
+CJCR,Woolf Institute
+HMC,The Cambridge Centre for Christianity Worldwide
+IOCS,Institute for Orthodox Christian Studies
+MBIT,Margaret Beaufort Institute of Theology
+RIDLEY,Ridley Hall
+TYNDALE,Tyndale Library
+WESLEY,Wesley House
+WESTCOT,Westcott House
+WESTMIN,Westminster College
+GIRTON,Girton College
+HOM,Homerton College
+HUGHES,Hughes Hall
+INTERCOL,Office of Intercollegiate Services
+JESUS,Jesus College
+JOHNS,St John's College
+KINGS,King's College
+KCRC,King's College Research Centre
+LCC,Lucy Cavendish College
+MAGD,Magdalene College
+NEWH,Murray Edwards College
+NEWN,Newnham College
+PEMB,Pembroke College
+PET,Peterhouse
+QUEENS,Queens' College
+ROBIN,Robinson College
+SEL,Selwyn College
+SID,Sidney Sussex College
+TRIN,Trinity College
+TRININT,The Isaac Newton Trust
+TRINLIB,Trinity College Library
+TRINH,Trinity Hall
+WOLFC,Wolfson College
+BAS,British Antarctic Survey
+CAMENT,Cambridge Enterprise
+MRC,Medical Research Council
+APRU,MRC Cognition and Brain Sciences Unit
+BIOSTAT,MRC Biostatistics Unit
+DUNN,MRC Mitochondrial Biology Unit
+HNR,MRC Human Nutrition Research
+MB,Laboratory of Molecular Biology
+UOC,University of Cambridge
+AMICUS,UNITE
+BUSR,Centre for Business Research
+CRASSH,"Centre for Research in the Arts, Social Sciences and Humanities"
+ERASGRAD,Erasmus Graduate Exchange Students
+XMURAL,Institute of Continuing Education
+CARET,Centre for Applied Research in Educational Technologies
+CUL,Cambridge University Library
+BGML,Betty & Gordon Moore Library
+MEDLIB,"Medical Library, Addenbrookes Hospital"
+SPLIB,"Cambridge University Library, Central Science Library"
+SPSLIB,Social and Political Sciences Library
+SQUIRE,Squire Law Library
+WOLFIU,Wolfson Industrial Liaison Office
+ADCTH,ADC Theatre
+APPBD,Careers Service
+AUT,Cambridge University and College Union
+CADMIN,Administrative Offices
+AD,Academic Division
+COUNSEL,Counselling Service
+BEXAM,Board of Examinations
+BOGS,Board of Graduate Studies
+CCT,Cambridge Commonwealth Trust & Cambridge Overseas Trust
+CET,Cambridge European Trust
+CIAO,Cambridge Admissions Office
+CME,Cambridge MIT Exchange
+CMI,Cambridge-MIT Institute
+ESTMAN,Estate Management
+FINANB,Finance Division
+GCT,Gates Cambridge Trust
+HR,Human Resources Division
+HSD,Occupational Health and Safety Service
+INVEST,Investment Office
+LODG,Accommodation Service
+MARSH,Marshal's Office
+MCSC,Malaysian Commonwealth Studies Centre
+NWCD,West and North West Cambridge Estates Syndicate
+PLAY,Childcare Office
+PPO,Office of External Affairs and Communications
+RSD,Research Services Division
+SEC,Security Office
+SECRET,Registrary's Office
+LEGAL,Legal Services Office
+SSU,Shared Services Unit
+UDU,University Development and Alumni Relations
+CIA,Cambridge in America
+UR,Registrary
+DISAB,Disability Resource Centre
+VCO,Vice-Chancellor's Office
+CHAPL,University Chaplaincies
+FISHER,Catholic Chaplaincy
+GSM,Great St Mary's
+COMBIN,University Combination Room
+CSU,Cambridge University Students' Union
+ENVIR,Environmental Office
+FARM,University Farm
+FITZM,Fitzwilliam Museum
+HKERR,Hamilton Kerr Institute
+GRADPAD,Facilities Management
+GRADU,Cambridge University Graduate Union
+HEALTH,University Health Services
+DENTSER,Dental Service
+KETTLE,Kettle's Yard Gallery
+LES,Cambridge Assessment
+PE,Sports Syndicate and Physical Education
+CRICKET,Physical Education (Fenner's Cricket & Tennis Ground)
+FENNERS,Physical Education (Cambridge University Sports Centre)
+SPORTS,Physical Education (Sports Ground)
+UIS,University Information Services
+CS,University Computing Service
+CSCONSLT,Computing Service Contractors
+CSTEST,University Computing Service (testing accounts)
+MISD,Management Information Services Division
+UISTEST,University Information Services (test accounts)
+UISVISIT,University Information Services Visitors
+UP,Cambridge University Press
+USSC,University Social Club
+ART,Faculty of Architecture and History of Art
+ARCT,Department of Architecture
+MARTIN,The Martin Centre
+HISTART,History of Art
+CLASS,Faculty of Classics
+CLASARC,Museum of Classical Archaeology
+CLASLIB,Classics Faculty Library
+DIV,Faculty of Divinity
+CARTS,Centre for Advanced Religious and Theological Studies
+FOE,Faculty of English
+ASNC,"Anglo-Saxon, Norse and Celtic"
+EFL,English Faculty Library
+FOM,Faculty of Music
+FOS,Faculty of Asian and Middle Eastern Studies
+CLP,Chinese Language Project
+CMES,Centre of Islamic Studies
+LANGCEN,Language Centre
+MML,Faculty of Modern and Medieval Languages
+FRENCH,Department of French
+GERM,Department of German and Dutch
+GREEK,Modern Greek Section
+ITALIAN,Department of Italian
+LING,Department of Theoretical and Applied Linguistics
+MMLCHC13,Certificate in Humanities Computing for Languages
+MMLCHC14,Certificate in Humanities Computing for Languages
+MMLLIB,Modern and Medieval Languages Library
+SLAVON,Department of Slavonic Studies
+SPAN,Department of Spanish and Portuguese
+PHIL,Faculty of Philosophy
+SARHU,School of the Arts and Humanities
+BIOL,Faculty of Biology
+BIOCH,Department of Biochemistry
+BOT,Department of Plant Sciences
+BOTGARD,Botanic Garden
+CAMIMM,Cambridge Immunology
+CSBC,Cambridge Systems Biology Centre
+EPSYCH,Department of Psychology
+CHCARE,Centre for Family Research
+GEN,Department of Genetics
+PATH,Department of Pathology
+PHARM,Department of Pharmacology
+PHYSI,"Department of Physiology, Development and Neuroscience"
+STEM,Wellcome Trust Medical Research Council Cambridge Stem Cell Institute
+WELLC,Gurdon Institute
+ZOO,Department of Zoology
+CVM,Department of Veterinary Medicine
+CROP,Clinical Research Outreach Programme
+GSLS,Graduate School of Life Sciences
+NIH,Cambridge-NIH Exchange Programme
+SAIN,Sainsbury Laboratory
+SBIOS,School of Biological Sciences
+UBSS,University Biomedical Support Services
+ECON,Faculty of Economics
+ECONLIB,Economics Marshall Library
+EDUC,Faculty of Education
+EDUCLIB,Faculty of Education Library
+HIST,Faculty of History
+SEELEY,Seeley Library (History)
+HPS,Department of History and Philosophy of Science
+WHIPPLIB,Whipple Library
+HSPS,"Faculty of Human, Social and Political Science"
+ARCHANT,Department of Archaeology and Anthropology
+HADDON,Haddon Library
+LCHES,Leverhulme Centre for Human Evolutionary Studies
+MAA,Museum of Archaeology and Anthropology
+MIAR,McDonald Institute for Archaeological Research
+POLITX,Department of Politics and International Studies
+CAS,Centre of African Studies
+CLAMS,Centre of Latin-American Studies
+CSAS,Centre of South Asian Studies
+OSC,Centre of Development Studies
+SOCIAL,Department of Sociology
+LAW,Faculty of Law
+CRIM,Institute of Criminology
+CRIMLIB,Radzinowicz Library of Criminology
+INTLAW,Lauterpacht Centre for International Law
+LE,Department of Land Economy
+SHSS,School of the Humanities and Social Sciences
+CBS,Central Biomedical Services
+TRANSG,CBS Transgenic Services
+CIMR,Cambridge Institute for Medical Research
+CRI,Cambridge Research Institute
+CLINMED,Faculty of Clinical Medicine
+CBIOCH,Clinical Biochemistry
+CCU,MRC Cancer Unit
+CHEST,"Faculty of Clinical Medicine, Department of Chest Medicine"
+CLINSTUD,Clinical Students
+CNEUROL,Department of Clinical Neurosciences
+CBR,John van Geest Centre for Brain Repair
+NEUROL,The Neurology Unit
+NEUROS,Neurosurgery
+WBIC,Wolfson Brain Imaging Centre
+COMMED,Department of Public Health and Primary Care
+CGERON,Clinical Gerontology Unit
+GP,Primary Care Unit
+EPID,MRC Epidemiology Unit
+GYNAE,Department of Obstetrics and Gynaecology
+HAEM,Department of Haematology
+TRANSF,Transfusion Medicine
+MED,Department of Medicine
+MEDGEN,Department of Medical Genetics
+MEDIT,Clinical School Computing Service
+MEDPATH,Clinical Pathology
+PAED,Department of Paediatrics
+PSYCHI,Department of Psychiatry
+DEVPSY,Developmental Psychiatry
+RADIOL,Department of Radiology
+RADT,Department of Oncology
+REGIUS,Regius Professor of Physic Facilities
+SRL,Strangeways Research Laboratory
+SURG,Department of Surgery
+CRUK,Cancer Research UK Cambridge Institute
+IMS,Institute of Metabolic Science
+IPH,Institute of Public Health
+EEEPID,HPA East of England Regional Epidemiology Unit
+ERPHO,PHE Knowledge & Intelligence Team (East)
+LABMC,Herchel Smith Laboratory for Medicinal Chemistry
+MEDCOMP,Clinical Biomedical Computing Unit
+MEDPHOT,Medical Photography
+MWORK,Clinical School Workshops
+BASSTUD,BAS Cambridge Research Students
+GEOGL,Faculty of Earth Sciences and Geography
+EARTH,Department of Earth Sciences
+BPAMOCO,BP Institute
+GEOG,Department of Geography
+CGHPSS,Cambridge Group for History of Population & Social Structure
+GENDER,Centre for Gender Studies
+SPRI,Scott Polar Research Institute
+INIMS,Isaac Newton Institute for Mathematical Sciences
+MATHS,Faculty of Mathematics
+DAMTP,Department of Applied Maths and Theoretical Physics
+CCBI,Cambridge Computational Biology Institute
+CMS,Centre for Mathematical Sciences
+ESCI,Cambridge eScience Centre
+DPMMS,Department of Pure Maths and Mathematical Statistics
+PC,Faculty of Physics and Chemistry
+CHEM,Department of Chemistry
+POLYMER,Melville Laboratory for Polymer Synthesis
+IOA,Institute of Astronomy
+KICC,Kavli Institute for Cosmology
+MET,Department of Materials Science and Metallurgy
+PHY,Department of Physics
+SPHS,School of the Physical Sciences (office)
+CEB,Department of Chemical Engineering and Biotechnology
+CL,Computer Laboratory
+CLTCH,Computer Laboratory Teaching
+CPI,Institute for Sustainability Leadership
+CSAP,Centre for Science and Policy
+ENG,Department of Engineering
+JIMS,Judge Business School
+CEC,Centre for Entrepreneurial Learning
+JEE,Judge Executive Education Ltd
+STEC,Office of School of Technology
+HNRSTUD,MRC Human Nutrition Research Students

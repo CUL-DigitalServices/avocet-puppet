@@ -17,6 +17,9 @@ var bunyan = require('bunyan');
 <% if config_log_syslog_ip -%>
 var bsyslog = require('bunyan-syslog');
 <% end -%>
+<% if config_monitoring_enabled -%>
+var logstash = require('bunyan-logstash');
+<% end -%>
 
 var config = module.exports.config = {};
 
@@ -128,6 +131,15 @@ config.log = {
                 'facility': bsyslog.local0,
                 'host': '<%= config_log_syslog_ip %>',
                 'port': 514
+            })
+        }
+<% end -%>
+<% if config_monitoring_enabled -%>
+        ,{
+            'type': 'raw',
+            'stream': logstash.createStream({
+                'host': '<%= config_monitoring_host %>',
+                'port': <%= config_monitoring_port %>
             })
         }
 <% end -%>

@@ -34,6 +34,9 @@ server {
 
     add_header X-Backend-Server $upstream_addr;
     
+    # Redirect /me to the home page
+    rewrite ^/me$      / permanent;
+
     ######################
     ## SHARED RESOURCES ##
     ######################

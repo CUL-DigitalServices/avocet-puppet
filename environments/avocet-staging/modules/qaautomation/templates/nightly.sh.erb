@@ -20,7 +20,7 @@ echo ""
 echo "Restoring services with puppet"
 #puppet agent -t
 cd /opt/puppet-hilary
-puppet apply --verbose --debug --modulepath environments/avocet-dev/modules:modules:/etc/puppet/modules --certname dev0 --environment avocet-dev --hiera_config /etc/puppet/hiera.yaml site.pp
+puppet apply --verbose --debug --modulepath environments/avocet-staging/modules:modules:/etc/puppet/modules --certname staging0 --environment avocet-staging --hiera_config /etc/puppet/hiera.yaml site.pp
 
 echo ""
 echo "Performing production build (this will take a little while)"
@@ -59,7 +59,7 @@ npm install -g oaesh
 echo ""
 echo "Creating tenant"
 oaesh -U http://<%= admin_host %> -u administrator -p administrator -- \
-    exec -m POST "/api/tenant/create" -d "alias=cam" -d "displayName=Cambridge" -d "host=ec2-54-73-99-234.eu-west-1.compute.amazonaws.com"
+    exec -m POST "/api/tenant/create" -d "alias=cam" -d "displayName=Cambridge" -d "host=ec2-54-195-45-171.eu-west-1.compute.amazonaws.com"
 
 # Disable reCaptcha
 echo ""
@@ -99,8 +99,8 @@ echo "Enabling Google strategy"
 oaesh -U http://<%= admin_host %> -u administrator -p administrator -- \
     config-set \
         -k "oae-authentication/google/enabled=true" \
-        -k "oae-authentication/google/key=832766182042-er6qqh5nqitn30oqrtad7mvgcadl6dcr.apps.googleusercontent.com" \
-        -k "oae-authentication/google/secret=MKo6exTvIM8_tiJDt1t4zYWz"
+        -k "oae-authentication/google/key=754217729503-bg0915ce65qqanosio25agrpdtb6hp0p.apps.googleusercontent.com" \
+        -k "oae-authentication/google/secret=ETWqZZyKuL30TUN_UhaLZmsQ"
 
 # Enable Feedbackify
 echo ""

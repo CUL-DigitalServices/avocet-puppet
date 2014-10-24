@@ -97,9 +97,6 @@
     "email_smtp_pass": "unset",
     "email_blacklisted_domains": ["example.com", "localhost", "127.0.0.1"],
 
-    "monitoring_enabled": true,
-    "monitoring_host": "http://ec2-54-220-91-86.eu-west-1.compute.amazonaws.com",
-    "monitoring_port": 5505,
 
     "mq_hosts": [ "127.0.0.1" ],
 

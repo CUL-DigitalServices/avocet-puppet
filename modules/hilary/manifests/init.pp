@@ -44,6 +44,11 @@ class hilary (
     # Logging
     $config_log_syslog_ip             = false,
 
+    # Monitoring
+    $config_monitoring_enabled        = false,
+    $config_monitoring_host           = '127.0.0.1',
+    $config_monitoring_port           = 5505,
+
     # Telemetry
     $config_telemetry_circonus_url,
 

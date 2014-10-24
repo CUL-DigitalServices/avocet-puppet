@@ -74,6 +74,11 @@ class oaeservice::hilary {
     config_etherpad_api_key           => hiera('etherpad_api_key'),
 
     config_log_syslog_ip              => $rsyslog_host,
+
+    config_monitoring_enabled         => hiera('monitoring_enabled', false),
+    config_monitoring_host            => hiera('monitoring_host', '127.0.0.1'),
+    config_monitoring_port            => hiera('monitoring_port', 5505),
+
     config_activity_redis_host        => $activitycache_host,
     config_activity_redis_port        => $activitycache_port,
 
