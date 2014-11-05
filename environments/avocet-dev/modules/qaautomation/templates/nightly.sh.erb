@@ -81,7 +81,7 @@ fi
 # Disable local strategy
 echo ""
 echo "Disabling local strategy"
-oaesh -U http://<%= admin_host %> -u administrator -p administrator -- \
+oaesh -U http://<%= admin_host %>/tenant/cam -u administrator -p administrator -- \
     config-set \
         -k "oae-authentication/local/allowAccountCreation=false" \
         -k "oae-authentication/local/enabled=false"
@@ -89,14 +89,14 @@ oaesh -U http://<%= admin_host %> -u administrator -p administrator -- \
 # Disable Twitter strategy
 echo ""
 echo "Disabling Twitter strategy"
-oaesh -U http://<%= admin_host %> -u administrator -p administrator -- \
+oaesh -U http://<%= admin_host %>/tenant/cam -u administrator -p administrator -- \
     config-set \
         -k "oae-authentication/twitter/enabled=false"
 
 # Enable the Google strategy
 echo ""
 echo "Enabling Google strategy"
-oaesh -U http://<%= admin_host %> -u administrator -p administrator -- \
+oaesh -U http://<%= admin_host %>/tenant/cam -u administrator -p administrator -- \
     config-set \
         -k "oae-authentication/google/enabled=true" \
         -k "oae-authentication/google/key=1041470933614-dislot3ktsnl4u17636b46sq82u438lk.apps.googleusercontent.com" \
@@ -105,7 +105,7 @@ oaesh -U http://<%= admin_host %> -u administrator -p administrator -- \
 # Enable Feedbackify
 echo ""
 echo "Enabling Feedbackify"
-oaesh -U http://<%= admin_host %> -u administrator -p administrator -- \
+oaesh -U http://<%= admin_host %>/tenant/cam -u administrator -p administrator -- \
     config-set \
         -k "oae-feedbackify/feedbackify/enabled=true" \
         -k "oae-feedbackify/feedbackify/formId=7625" \

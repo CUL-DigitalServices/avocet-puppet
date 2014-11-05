@@ -78,25 +78,25 @@ if [ "<%= flickr_api_key %>" != "unset" ] ; then
             -k "oae-preview-processor/slideshare/apikey=<%= slideshare_api_key %>"
 fi
 
-# Disable local strategy
+# Disable local strategy for the tenant
 echo ""
 echo "Disabling local strategy"
-oaesh -U http://<%= admin_host %> -u administrator -p administrator -- \
+oaesh -U http://<%= admin_host %>/tenant/cam -u administrator -p administrator -- \
     config-set \
         -k "oae-authentication/local/allowAccountCreation=false" \
         -k "oae-authentication/local/enabled=false"
 
-# Disable Twitter strategy
+# Disable Twitter strategy for the tenant
 echo ""
 echo "Disabling Twitter strategy"
-oaesh -U http://<%= admin_host %> -u administrator -p administrator -- \
+oaesh -U http://<%= admin_host %>/tenant/cam -u administrator -p administrator -- \
     config-set \
         -k "oae-authentication/twitter/enabled=false"
 
-# Enable the Google strategy
+# Enable the Google strategy for the tenant
 echo ""
 echo "Enabling Google strategy"
-oaesh -U http://<%= admin_host %> -u administrator -p administrator -- \
+oaesh -U http://<%= admin_host %>/tenant/cam -u administrator -p administrator -- \
     config-set \
         -k "oae-authentication/google/enabled=true" \
         -k "oae-authentication/google/key=1041470933614-50upmglori562t1rua7fq2te8ars8cto.apps.googleusercontent.com" \
@@ -105,7 +105,7 @@ oaesh -U http://<%= admin_host %> -u administrator -p administrator -- \
 # Enable Feedbackify
 echo ""
 echo "Enabling Feedbackify"
-oaesh -U http://<%= admin_host %> -u administrator -p administrator -- \
+oaesh -U http://<%= admin_host %>/tenant/cam -u administrator -p administrator -- \
     config-set \
         -k "oae-feedbackify/feedbackify/enabled=true" \
         -k "oae-feedbackify/feedbackify/formId=7625" \
