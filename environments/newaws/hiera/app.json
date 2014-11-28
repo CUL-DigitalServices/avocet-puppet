@@ -4,6 +4,7 @@
         "::oaeservice::deps::package::samlparser",
         "::oaeservice::hilary",
         "::oaeservice::ui",
+        "::oaeservice::newrelic",
         "::oaeservice::nginx",
         "::oaeservice::postfix",
         "::oaeservice::redis",
@@ -35,5 +36,10 @@
     "redis::syslog_enabled": true,
     "redis::eviction_maxmemory": 1610612736,
     "redis::eviction_policy": "volatile-ttl",
-    "redis::eviction_samples": 3
+    "redis::eviction_samples": 3,
+
+    "web_domain": "openaccess.cam.ac.uk",
+    "newrelic_app_name": "Avocet Live",
+    "newrelic_license_key": "fd3a9846bc35594560252b5fa68eacb393f88b27"
+
 }

@@ -3,4 +3,7 @@ class localconfig::ordering::app {
   Class['::oaeservice::hilary::files']              -> Class['::hilary']
   Class['::oaeservice::deps::package::openjdk6']    -> Class['::hilary']
   Class['::oaeservice::deps::package::samlparser']  -> Class['::hilary']
+  # Install the newrelic stuff after hilary is installed
+  Class['::hilary'] -> Class['::newrelic']
+
 }

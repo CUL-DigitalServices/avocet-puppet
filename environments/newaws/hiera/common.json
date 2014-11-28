@@ -36,7 +36,7 @@
     "app_install_config": {
         "url_base": "https://avocet-releases.s3.amazonaws.com/oae",
         "version_major_minor": "1.0",                                                                                                                                                                 
-        "version_patch": "2",
+        "version_patch": "3",
         "version_nodejs": "0.10.33"
     },
     "app_os_user": "www-data",
@@ -59,7 +59,7 @@
     "ux_install_config": {
         "url_base": "https://avocet-releases.s3.amazonaws.com/oae",
         "version_major_minor": "1.0",                                                                                                                                                                 
-        "version_patch": "2"
+        "version_patch": "3"
     },
 
     "db_cluster_name": "openaccess-cluster",
@@ -113,6 +113,10 @@
     "email_smtp_user": "unset",
     "email_smtp_pass": "unset",
     "email_blacklisted_domains": ["example.com", "localhost", "127.0.0.1"],
+
+    "monitoring_enabled": true,
+    "monitoring_host": "54.220.91.86",
+    "monitoring_port": 5505,
 
     "mq_hosts": [ "ip-10-13-1-11.eu-west-1.compute.internal", "ip-10-13-2-11.eu-west-1.compute.internal" ],
 
