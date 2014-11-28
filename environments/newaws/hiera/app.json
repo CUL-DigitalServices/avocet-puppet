@@ -1,0 +1,45 @@
+{
+    "classes": [
+        "::oaeservice::deps::package::openjdk6",
+        "::oaeservice::deps::package::samlparser",
+        "::oaeservice::hilary",
+        "::oaeservice::ui",
+        "::oaeservice::newrelic",
+        "::oaeservice::nginx",
+        "::oaeservice::postfix",
+        "::oaeservice::redis",
+        "::oaeservice::mq"
+    ],
+
+    "hilary::config_previews_enabled": true,
+    "hilary::config_activity_enabled": true,
+    
+    "email_debug": false,
+    "rsyslog::imfiles": [
+        {
+            "path": "/var/log/nginx/access.log",
+            "tag": "access",
+            "state_file_name": "nginx_access",
+            "severity": "info",
+            "facility": "local0",
+            "poll_interval_seconds": 10
+        },
+        {
+            "path": "/var/log/nginx/error.log",
+            "tag": "error",
+            "state_file_name": "nginx_error",
+            "severity": "error",
+            "facility": "local1",
+            "poll_interval_seconds": 10
+        }
+    ],
+    "redis::syslog_enabled": true,
+    "redis::eviction_maxmemory": 1610612736,
+    "redis::eviction_policy": "volatile-ttl",
+    "redis::eviction_samples": 3,
+
+    "web_domain": "openaccess.cam.ac.uk",
+    "newrelic_app_name": "Avocet Live",
+    "newrelic_license_key": "fd3a9846bc35594560252b5fa68eacb393f88b27"
+
+}
