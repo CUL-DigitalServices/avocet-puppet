@@ -1,3 +1,5 @@
 {
-    "web_domain": "staging0.avocet.cam.ac.uk"
+    "web_domain": "staging0.avocet.cam.ac.uk",
+    "newrelic_app_name": "Avocet Staging0",
+    "newrelic_license_key": "fd3a9846bc35594560252b5fa68eacb393f88b27"
 }

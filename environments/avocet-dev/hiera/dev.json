@@ -6,6 +6,7 @@
         "::oaeservice::elasticsearch",
         "::oaeservice::hilary",
         "::oaeservice::mq",
+        "::oaeservice::newrelic",
         "::oaeservice::nginx",
         "::oaeservice::postfix",
         "::oaeservice::redis",

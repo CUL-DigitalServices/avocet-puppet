@@ -18,7 +18,7 @@ var bunyan = require('bunyan');
 var bsyslog = require('bunyan-syslog');
 <% end -%>
 <% if config_monitoring_enabled -%>
-var logstash = require('bunyan-logstash');
+var logstash = require('bunyan-logstash-tcp');
 <% end -%>
 
 var config = module.exports.config = {};
