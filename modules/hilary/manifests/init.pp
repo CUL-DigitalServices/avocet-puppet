@@ -34,6 +34,7 @@ class hilary (
 
     # Servers
     $config_servers_admin_host,
+    $config_servers_shib_host,
     $config_servers_use_https         = true,
     $config_servers_strict_https      = true,
     $config_servers_server_internal_address = '127.0.0.1',
@@ -54,6 +55,7 @@ class hilary (
 
     # Search
     $config_search_hosts,
+    $config_search_enabled            = true,
 
     # RabbitMQ
     $config_mq_hosts,
@@ -74,6 +76,9 @@ class hilary (
     # Email notifications
     $config_email_debug                      = false,
     $config_email_customEmailTemplatesDir    = 'null',
+    $config_email_deduplicationInterval      = 604800,
+    $config_email_throttleTimespan           = 120,
+    $config_email_throttleCount              = 10,
     $config_email_transport                  = 'sendmail',
     $config_email_sendmail_path              = '/usr/sbin/sendmail',
     $config_email_smtp_service               = 'Gmail',

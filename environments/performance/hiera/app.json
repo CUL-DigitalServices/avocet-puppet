@@ -1,15 +1,14 @@
 {
     "classes": [
-        "::oaeservice::deps::package::openjdk6",
-        "::oaeservice::deps::package::samlparser",
         "::oaeservice::hilary",
         "::oaeservice::hilary::files",
         "::oaeservice::nagios::disk::shared",
         "::oaeservice::nagios::hilary",
         "::oaeservice::ui",
-        
+
         "::localconfig::ordering::app"
     ],
 
-    "nagios_hostgroup": "appservers"
+    "nagios_hostgroup": "appservers",
+    "search_enabled": false
 }

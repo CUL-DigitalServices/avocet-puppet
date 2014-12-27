@@ -1,46 +1,63 @@
-<% if ssl_policy == 'redirect_http' -%>
+<% if @ssl_policy == 'redirect_http' -%>
 server {
-<% if server_name == 'default_server' -%>
+<% if @server_name == 'default_server' -%>
     listen          80 default_server;
 <% else -%>
     listen          80;
-    server_name     <%= server_name %>;
+    server_name     <%= @server_name %>;
 <% end -%>
     return          301 https://$host$request_uri;
 }
 <% end -%>
 
 server {
-<% if server_name == 'default_server' -%>
-<% if ssl_policy == 'allow_http' -%>
+<% if @server_name == 'default_server' -%>
+<% if @ssl_policy == 'allow_http' -%>
     listen      80 default_server;
 <% end -%>
     listen      443 default_server ssl;
 <% else -%>
-<% if ssl_policy == 'allow_http' -%>
+<% if @ssl_policy == 'allow_http' -%>
     listen      80;
 <% end -%>
     listen      443 ssl;
-    server_name <%= server_name %>;
+    server_name <%= @server_name %>;
 <% end -%>
 
-    ssl_certificate      <%= ssl_crt_path %>;
-    ssl_certificate_key  <%= ssl_key_path %>;
+    ssl_certificate      <%= @ssl_crt_path %>;
+    ssl_certificate_key  <%= @ssl_key_path %>;
 
     # Prevent BEAST attack
     # @see http://www.kb.cert.org/vuls/id/864643
-    ssl_ciphers RC4:HIGH:!aNULL:!MD5;
+    ssl_ciphers EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:EECDH+RC4:RSA+RC4:!MD5;
     ssl_prefer_server_ciphers on;
 
     # Redirect /me to the home page
     rewrite ^/me$      / permanent;
 
+    # Prevent POODLE by not using SSL v3
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+
+    # Enable HSTS which tells browsers not to use http:// for at least a year
+    add_header Strict-Transport-Security "max-age=31536000; includeSubdomains";
+
+    # This is required for passing the `remote_user` header from shib
+    underscores_in_headers on;
+
     ######################
     ## SHARED RESOURCES ##
     ######################
 
+    # Enable CORS support for the font-awesome webfont
+    # so we can load it from our CDN
+    location /shared/vendor/css/font-awesome/fonts/ {
+        alias <%= @app_ui_path %>/shared/vendor/css/font-awesome/fonts/;
+        add_header Access-Control-Allow-Origin "*";
+        expires max;
+    }
+
     location /shared/ {
-        alias <%= app_ui_path %>/shared/;
+        alias <%= @app_ui_path %>/shared/;
         autoindex off;
         expires max;
     }
@@ -58,6 +75,7 @@ server {
     rewrite ^/unavailable$       /avocet/errors/unavailable.html last;
 
     rewrite ^/favicon.ico$       /avocet/images/favicon.ico last;
+    rewrite ^/robots.txt            /shared/oae/robots.txt last;
 
 
     #####################
@@ -65,21 +83,22 @@ server {
     #####################
 
     location /admin/ {
-        alias <%= app_ui_path %>/admin/;
+        alias <%= @app_ui_path %>/admin/;
         autoindex off;
         expires max;
     }
 
     # HTML files under /admin are not hashed and should not be cached
     location ~* /admin/([^\.]+).html$ {
-        alias <%= app_ui_path %>/admin/$1.html;
+        alias <%= @app_ui_path %>/admin/$1.html;
         expires -1;
     }
 
-    rewrite ^/admin$          /admin/index.html last;
-    rewrite ^/admin/tenants   /admin/index.html last;
-    rewrite ^/admin/modules   /admin/index.html last;
-    rewrite ^/admin/skinning  /admin/index.html last;
+    rewrite ^/admin$                  /admin/index.html last;
+    rewrite ^/admin/configuration     /admin/index.html last;
+    rewrite ^/admin/tenants           /admin/index.html last;
+    rewrite ^/admin/skinning          /admin/index.html last;
+    rewrite ^/admin/usermanagement    /admin/index.html last;
 
 
     ##############################
@@ -122,7 +141,7 @@ server {
     ######################
 
     location /node_modules/ {
-        alias <%= app_ui_path %>/node_modules/;
+        alias <%= @app_ui_path %>/node_modules/;
         autoindex off;
         expires max;
     }
@@ -133,19 +152,21 @@ server {
     ####################
 
     location /docs/ {
-        alias <%= app_ui_path %>/docs/;
+        alias <%= @app_ui_path %>/docs/;
         autoindex off;
     }
 
     # HTML files under /docs are not hashed and should not be cached
     location ~* /docs/([^\.]+).html$ {
-        alias <%= app_ui_path %>/docs/$1.html;
+        alias <%= @app_ui_path %>/docs/$1.html;
         expires -1;
     }
 
-    rewrite ^/docs$                 /docs/index.html last;
-    rewrite ^/docs/backend          /docs/index.html last;
-    rewrite ^/docs/frontend         /docs/index.html last;
+    rewrite ^/docs$                     /docs/index.html last;
+    rewrite ^/docs/internal$            /docs/internal/index.html last;
+    rewrite ^/docs/internal/backend     /docs/internal/index.html last;
+    rewrite ^/docs/internal/frontend    /docs/internal/index.html last;
+    rewrite ^/docs/rest$                /docs/rest/index.html last;
 
 
     #################
@@ -158,14 +179,14 @@ server {
     error_page      503     /avocet/errors/unavailable.html;
 
 
-<% if static_assets_dir -%>
+<% if @static_assets_dir -%>
 
     ###################
     ## STATIC ASSETS ##
     ###################
 
     location /assets/ {
-        alias <%= static_assets_dir %>/;
+        alias <%= @static_assets_dir %>/;
         autoindex off;
         expires max;
     }
@@ -379,6 +400,38 @@ server {
         }
 
 
+    ################
+    ## SHIBBOLETH ##
+    ################
+
+    # Proxy everything under /Shibboleth.sso to Apache
+    location /Shibboleth.sso {
+        proxy_read_timeout 120;
+        proxy_pass http://shibworker;
+    }
+
+    # The URL when the user comes back from the IdP
+    location /api/auth/shibboleth/sp/returned {
+        proxy_read_timeout 120;
+        proxy_pass http://shibworker;
+    }
+
+    # The URL that Apache will proxy to on the local loopback interface.
+    # This URL should *NOT* be accessible over any other interface
+    location /api/auth/shibboleth/sp/callback {
+        allow 127.0.0.1;
+        deny all;
+        proxy_read_timeout 120;
+        proxy_pass http://tenantworkers;
+    }
+
+    # The /shib folder is used to load the CSS and logo for error pages
+    location /shib/ {
+        alias /usr/share/doc/shibboleth/;
+        autoindex off;
+        expires max;
+    }
+
     ####################
     ## FILE DOWNLOADS ##
     ####################
@@ -389,7 +442,7 @@ server {
     # in the admin UI.
     location /files {
         internal;
-        alias <%= files_home %>;
+        alias <%= @files_home %>;
     }
 
     ##########
@@ -412,7 +465,7 @@ server {
     ## ETHERPAD SERVERS ##
     ######################
 
-<% internal_etherpad_ips.each_with_index do |ip, index| -%>
+<% @internal_etherpad_ips.each_with_index do |ip, index| -%>
     location /etherpad/<%= index %> {
         expires 15m;
 

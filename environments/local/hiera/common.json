@@ -70,6 +70,11 @@
     "etherpad_api_key": "LSKDFJA0W9FJAOSIDFJ",
     "etherpad_session_key": "YzI3znrSsxByU1QsRtPZhX6tkxVUoQh1suIDrUcBtewrsBDLPkGRTP6oUqhL",
     "etherpad_enable_abiword": true,
+    "etherpad_install_config": {
+        "version_major_minor": "1.4",
+        "version_patch": "0-66-e34a4ea",
+        "version_nodejs": "0.10.17"
+    },
 
     "cache_host": "127.0.0.1",
     "cache_port": 6379,
@@ -80,6 +85,9 @@
 
     "email_debug": true,
     "email_customEmailTemplatesDir": "null",
+    "email_deduplicationInterval": 604800,
+    "email_throttleTimespan": 120,
+    "email_throttleCount": 10,
     "email_transport": "SMTP",
     "email_sendmail_path": "/usr/sbin/sendmail",
     "email_smtp_service": "unset",
@@ -98,10 +106,15 @@
 
     "driver_tsung_version": "1.4.2",
 
+    "shibboleth_entity_id": "https://shib-sp.vagrant.oae/shibboleth",
+    "shibboleth_keyname": "web0",
+    "shibboleth_subjectname": "CN=web0",
+    "shibboleth_sp_host": "shib-sp.vagrant.oae",
+
     "nginx::owner": "nginx",
     "nginx::group": "nginx",
     "nginx::ssl_policy": "allow_http",
-    "nginx::version": "1.5.6-1~precise0",
+    "nginx::version": "1.7.6-1+precise1",
 
     "redis::owner": "redis",
     "redis::group": "redis",

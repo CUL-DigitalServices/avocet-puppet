@@ -8,5 +8,4 @@ class newrelic (
         ensure  => present,
         content => template('newrelic/newrelic.js.erb'),
     }
-
 }

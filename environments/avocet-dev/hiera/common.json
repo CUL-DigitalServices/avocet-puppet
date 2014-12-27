@@ -41,6 +41,10 @@
     },
     "app_ui_path": "/opt/3akai-ux",
 
+    "shibboleth_entity_id": "https://shib-sp.dev0.avocet.cam.ac.uk/shibboleth",
+    "shibboleth_keyname": "shib-sp.dev0.avocet.cam.ac.uk",
+    "shibboleth_subjectname": "CN=shib-sp.dev0.avocet.cam.ac.uk",
+    "shibboleth_sp_host": "shib-sp.dev0.avocet.cam.ac.uk",
 
     "ux_root_dir": "/opt/3akai-ux",
     "ux_install_method": "git",
@@ -88,6 +92,9 @@
 
     "email_debug": true,
     "email_customEmailTemplatesDir": "null",
+    "email_deduplicationInterval": 604800,
+    "email_throttleTimespan": 120,
+    "email_throttleCount": 10,
     "email_transport": "SMTP",
     "email_sendmail_path": "/usr/sbin/sendmail",
     "email_smtp_service": "unset",
@@ -114,7 +121,7 @@
     "nginx::group": "nginx",
     "nginx::rate_limit_api": false,
     "nginx::ssl_policy": "allow_http",
-    "nginx::version": "1.5.6-1~precise0",
+    "nginx::version": "1.7.6-1+precise1",
 
     "redis::owner": "redis",
     "redis::group": "redis",

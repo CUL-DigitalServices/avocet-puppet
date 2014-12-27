@@ -7,7 +7,7 @@
 
 # The name of the cluster. This is mainly used to prevent machines in
 # one logical cluster from joining another.
-cluster_name: '<%= cluster_name %>'
+cluster_name: '<%= @cluster_name %>'
 
 # This defines the number of tokens randomly assigned to this node on the ring
 # The more tokens, relative to other nodes, the larger the proportion of data
@@ -34,7 +34,7 @@ num_tokens: 1
 # the heaviest-loaded existing node.  If there is no load information
 # available, such as is the case with a new cluster, it will pick
 # a random token, which will lead to hot spots.
-initial_token: <%= initial_token %>
+initial_token: <%= @initial_token %>
 
 # See http://wiki.apache.org/cassandra/HintedHandoff
 hinted_handoff_enabled: true
@@ -107,15 +107,6 @@ authorizer: org.apache.cassandra.auth.AllowAllAuthorizer
 # Will be disabled automatically for AllowAllAuthorizer.
 permissions_validity_in_ms: 2000
 
-# Replication strategy to use for the auth keyspace.
-# Following an upgrade from DSE 3.0 to 3.1, this should be removed
-auth_replication_strategy: org.apache.cassandra.locator.SimpleStrategy
-
-# Replication options to use for the auth keyspace.
-# Following an upgrade from DSE 3.0 to 3.1, this should be removed
-auth_replication_options:
-    replication_factor: 1
-
 # The partitioner is responsible for distributing rows (by key) across
 # nodes in the cluster.  Any IPartitioner may be used, including your
 # own as long as it is on the classpath.  Out of the box, Cassandra
@@ -143,10 +134,10 @@ partitioner: org.apache.cassandra.dht.RandomPartitioner
 # will spread data evenly across them, subject to the granularity of
 # the configured compaction strategy.
 data_file_directories:
-    - <%= cassandra_data_dir %>/data
+    - <%= @cassandra_data_dir %>/data
 
 # commit log
-commitlog_directory: <%= cassandra_home_dir %>/commitlog
+commitlog_directory: <%= @cassandra_home_dir %>/commitlog
 
 # policy for data disk failures:
 # stop: shut down gossip and Thrift, leaving the node effectively dead, but
@@ -207,26 +198,7 @@ row_cache_save_period: 0
 # Disabled by default, meaning all keys are going to be saved
 # row_cache_keys_to_save: 100
 
-# The provider for the row cache to use.
-#
-# Supported values are: ConcurrentLinkedHashCacheProvider, SerializingCacheProvider
-#
-# SerializingCacheProvider serialises the contents of the row and stores
-# it in native memory, i.e., off the JVM Heap. Serialized rows take
-# significantly less memory than "live" rows in the JVM, so you can cache
-# more rows in a given memory footprint.  And storing the cache off-heap
-# means you can use smaller heap sizes, reducing the impact of GC pauses.
-# Note however that when a row is requested from the row cache, it must be
-# deserialized into the heap for use.
-#
-# It is also valid to specify the fully-qualified class name to a class
-# that implements org.apache.cassandra.cache.IRowCacheProvider.
-#
-# Defaults to SerializingCacheProvider
-row_cache_provider: SerializingCacheProvider
-
-# saved caches
-saved_caches_directory: <%= cassandra_home_dir %>/saved_caches
+saved_caches_directory: <%= @cassandra_home_dir %>/saved_caches
 
 # commitlog_sync may be either "periodic" or "batch." 
 # When in batch mode, Cassandra won't ack writes until the commit log
@@ -265,32 +237,7 @@ seed_provider:
       parameters:
           # seeds is actually a comma-delimited list of addresses.
           # Ex: "<ip1>,<ip2>,<ip3>"
-          - seeds: "<%= hosts.join(',') %>"
-
-# emergency pressure valve: each time heap usage after a full (CMS)
-# garbage collection is above this fraction of the max, Cassandra will
-# flush the largest memtables.  
-#
-# Set to 1.0 to disable.  Setting this lower than
-# CMSInitiatingOccupancyFraction is not likely to be useful.
-#
-# RELYING ON THIS AS YOUR PRIMARY TUNING MECHANISM WILL WORK POORLY:
-# it is most effective under light to moderate load, or read-heavy
-# workloads; under truly massive write load, it will often be too
-# little, too late.
-flush_largest_memtables_at: 0.75
-
-# emergency pressure valve #2: the first time heap usage after a full
-# (CMS) garbage collection is above this fraction of the max,
-# Cassandra will reduce cache maximum _capacity_ to the given fraction
-# of the current _size_.  Should usually be set substantially above
-# flush_largest_memtables_at, since that will have less long-term
-# impact on the system.  
-# 
-# Set to 1.0 to disable.  Setting this lower than
-# CMSInitiatingOccupancyFraction is not likely to be useful.
-reduce_cache_sizes_at: 0.85
-reduce_cache_capacity_to: 0.6
+          - seeds: "<%= @hosts.join(',') %>"
 
 # For workloads with more data than can fit in memory, Cassandra's
 # bottleneck will be reads that need to fetch data from
@@ -356,7 +303,7 @@ ssl_storage_port: 7001
 # address associated with the hostname (it might not be).
 #
 # Setting this to 0.0.0.0 is always wrong.
-listen_address: <%= listen_address %>
+listen_address: <%= @listen_address %>
 
 # Address to broadcast to other Cassandra nodes
 # Leaving this blank will set it to the same value as listen_address

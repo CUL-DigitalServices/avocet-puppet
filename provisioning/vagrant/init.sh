@@ -4,20 +4,13 @@ cd /vagrant
 
 # Do a basic check to see if we have a good environment to start from
 # Check if the oracle-java binary is present
-ORACLE_JDK_INSTALLER="jdk-6u45-linux-x64.bin"
+ORACLE_JDK_INSTALLER="jdk-7u65-linux-x64.gz"
 if [ ! -f /vagrant/modules/oracle-java/files/$ORACLE_JDK_INSTALLER ] ; then
-    echo "The Oracle JDK installer is not present in the correct location or is not executable."
+    echo "The Oracle JDK installer is not present in the correct location."
     echo "Please download $ORACLE_JDK_INSTALLER from the Oracle website and place it at:"
     echo "modules/oracle-java/files/$ORACLE_JDK_INSTALLER"
     exit 1
 fi
-
-# Check if the installer is marked as executable
-if [ ! -x /vagrant/modules/oracle-java/files/$ORACLE_JDK_INSTALLER ] ; then
-    echo "The Oracle JDK installer was not marked as executable, marking it for you."
-    chmod 755 /vagrant/modules/oracle-java/files/$ORACLE_JDK_INSTALLER
-fi
-
 
 # We need puppet version 3+
 PUPPET_VERSION=$(puppet help | tail -n 1 | cut -f 2 -d " ")
@@ -76,13 +69,13 @@ EOF
 
 # Run puppet
 echo "Applying puppet catalog. This might take a while (~30+ mins is not unreasonable)"
-puppet apply --verbose --debug --modulepath environments/local/modules:modules:/etc/puppet/modules --certname dev --environment local --hiera_config /etc/puppet/hiera.yaml site.pp
+puppet apply --modulepath environments/local/modules:modules:/etc/puppet/modules --certname dev --environment local --hiera_config /etc/puppet/hiera.yaml site.pp
 
 STATUS_CODE=$?
 if [ $STATUS_CODE -ne 0 ] ; then
     echo "Got a ${STATUS_CODE} status code, which indicates the puppet catalog could not be properly applied."
     echo "There are a couple of possible things you can do:"
-    echo " - Run vagrant ssh and try running cd /vagrant && sudo puppet apply --verbose --debug --modulepath environments/local/modules:modules:/etc/puppet/modules --certname dev --environment local --hiera_config /etc/puppet/hiera.yaml site.pp"
+    echo " - Run vagrant ssh and try running cd /vagrant && sudo puppet apply --modulepath environments/local/modules:modules:/etc/puppet/modules --certname dev --environment local --hiera_config /etc/puppet/hiera.yaml site.pp"
     echo " - If you're familiar with puppet try to analyze the output and tweak the puppet scripts"
     echo " - Hop onto #sakai on irc.freenode.org and ask if anyone has seen your error"
     echo " - Shoot an e-mail to oae-dev@sakaiproject.org with the above output"
@@ -96,6 +89,7 @@ service cassandra restart
 service elasticsearch restart
 service rabbitmq-server restart
 service redis-server restart
+service etherpad restart
 service nginx restart
 
 echo "All the dependencies have been restarted, sleeping for a bit to give them time to start up properly"
@@ -104,8 +98,8 @@ sleep 5
 # Start the app server
 service hilary restart
 
-echo "Sleeping 15 seconds to give the app server a little bit of time to start up"
-sleep 15
+echo "Sleeping 30 seconds to give the app server a little bit of time to start up"
+sleep 30
 
 curl http://localhost:2000/api/me
 

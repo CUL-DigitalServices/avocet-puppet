@@ -53,6 +53,11 @@
     "app_use_https": true,
     "app_strict_https": false,
 
+    "shibboleth_entity_id": "https://shib-sp.oae-qa.oaeproject.org/shibboleth",
+    "shibboleth_keyname": "shib-sp.oae-qa.oaeproject.org",
+    "shibboleth_subjectname": "CN=shib-sp.oae-qa.oaeproject.org",
+    "shibboleth_sp_host": "shib-sp.oae-qa.oaeproject.org",
+
     "ux_root_dir": "/opt/3akai-ux",
     
     "db_cluster_name": "OAE QA Cluster",
@@ -81,6 +86,11 @@
     "etherpad_api_key": "LSKDFJA0W9FJAOSIDFJ",
     "etherpad_session_key": "YzI3znrSsxByU1QsRtPZhX6tkxVUoQh1suIDrUcBtewrsBDLPkGRTP6oUqhL",
     "etherpad_enable_abiword": true,
+    "etherpad_install_config": {
+        "version_major_minor": "1.4",
+        "version_patch": "0-66-e34a4ea",
+        "version_nodejs": "0.10.17"
+    },
 
     "cache_host": "127.0.0.1",
     "cache_port": 6379,
@@ -91,6 +101,9 @@
 
     "email_debug": true,
     "email_customEmailTemplatesDir": "null",
+    "email_deduplicationInterval": 604800,
+    "email_throttleTimespan": 120,
+    "email_throttleCount": 10,
     "email_transport": "SMTP",
     "email_sendmail_path": "/usr/sbin/sendmail",
     "email_smtp_service": "unset",
@@ -113,8 +126,8 @@
     "nginx::owner": "nginx",
     "nginx::group": "nginx",
     "nginx::rate_limit_api": false,
-    "nginx::ssl_policy": "allow_http",
-    "nginx::version": "1.5.6-1~precise0",
+    "nginx::ssl_policy": "redirect_http",
+    "nginx::version": "1.7.6-1+precise1",
 
     "redis::owner": "redis",
     "redis::group": "redis",

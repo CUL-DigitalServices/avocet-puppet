@@ -1,4 +1,4 @@
-user                    <%= owner %> <%= group %>;
+user                    <%= @owner %> <%= @group %>;
 worker_processes        5;
 worker_rlimit_nofile    8192;
 
@@ -10,7 +10,12 @@ events {
 }
 
 http {
-    include <%= nginx_mimes_path %>;
+    include <%= @nginx_mimes_path %>;
+
+<% if @rsyslog_enabled -%>
+    access_log syslog:server=<%= @rsyslog_host %>,facility=local0,severity=info,tag=access combined;
+    error_log syslog:server=<%= @rsyslog_host %>,facility=local0,severity=error,tag=error error;
+<% end -%>
 
     # Allows us to have "server_name" strings up to 32 characters
     server_names_hash_bucket_size  64;
@@ -23,7 +28,7 @@ http {
     proxy_next_upstream error timeout http_502;
     # Only give the app server 5 seconds for a request before assuming it's down and retrying
     proxy_connect_timeout   5;
-    proxy_read_timeout      <%= base_read_timeout %>;
+    proxy_read_timeout      <%= @base_read_timeout %>;
 
     # Rewrite http headers to upstream servers
     proxy_http_version 1.1;
@@ -65,7 +70,7 @@ http {
     ####################
 
     upstream globaladminworkers {
-<% internal_app_ips.each do |ip| -%>
+<% @internal_app_ips.each do |ip| -%>
         server <%= ip %>:2000   max_fails=3 fail_timeout=30s;
 <% end -%>
 
@@ -73,14 +78,18 @@ http {
     }
 
     upstream tenantworkers {
-<% internal_app_ips.each do |ip| -%>
+<% @internal_app_ips.each do |ip| -%>
         server <%= ip %>:2001   max_fails=3 fail_timeout=30s;
 <% end -%>
 
         keepalive 64;
     }
 
+    upstream shibworker {
+        server localhost:8080;
+        keepalive 64;
+    }
 
     # Include all the host-specific configs
-    include <%= nginx_conf_dir %>/*.conf;
+    include <%= @nginx_conf_dir %>/*.conf;
 }

@@ -61,50 +61,63 @@ echo "Creating tenant"
 oaesh -U http://<%= admin_host %> -u administrator -p administrator -- \
     exec -m POST "/api/tenant/create" -d "alias=cam" -d "displayName=Cambridge" -d "host=ec2-54-73-99-234.eu-west-1.compute.amazonaws.com"
 
-# Disable reCaptcha
+# Disable reCaptcha for the tenant
 echo ""
-echo "Disabling reCaptcha"
+echo "Disabling reCaptcha for tenant"
 oaesh -U http://<%= admin_host %> -u administrator -p administrator -- \
     config-set \
-        -k "oae-principals/recaptcha/enabled=false"
+        -k "oae-principals/recaptcha/enabled=false" \
+        -t "cam"
 
 if [ "<%= flickr_api_key %>" != "unset" ] ; then
-    # Configuring the Flickr and SlideShare Preview Processor
+    # Configuring the Flickr and SlideShare Preview Processor for the tenant
+    echo ""
+    echo "Enable Flickr and Slideshare for tenant"
     oaesh -U http://<%= admin_host %> -u administrator -p administrator -- \
         config-set \
             -k "oae-preview-processor/flickr/apikey=<%=flickr_api_key %>" \
             -k "oae-preview-processor/flickr/apisecret=<%=flickr_api_secret %>" \
             -k "oae-preview-processor/slideshare/sharedsecret=<%=slideshare_shared_secret %>" \
-            -k "oae-preview-processor/slideshare/apikey=<%= slideshare_api_key %>"
+            -k "oae-preview-processor/slideshare/apikey=<%= slideshare_api_key %>" \
+            -t "cam"
 fi
 
-# Disable local strategy
+# Disable local strategy for the tenant
 echo ""
-echo "Disabling local strategy"
+echo "Disabling local strategy for tenant"
 oaesh -U http://<%= admin_host %> -u administrator -p administrator -- \
     config-set \
         -k "oae-authentication/local/allowAccountCreation=false" \
-        -k "oae-authentication/local/enabled=false"
+        -k "oae-authentication/local/enabled=false" \
+        -t "cam"
 
-# Disable Twitter strategy
+# Enable the Google strategy for the tenant
 echo ""
-echo "Disabling Twitter strategy"
-oaesh -U http://<%= admin_host %> -u administrator -p administrator -- \
-    config-set \
-        -k "oae-authentication/twitter/enabled=false"
-
-# Enable the Google strategy
-echo ""
-echo "Enabling Google strategy"
+echo "Enabling Google strategy for tenant"
 oaesh -U http://<%= admin_host %> -u administrator -p administrator -- \
     config-set \
         -k "oae-authentication/google/enabled=true" \
         -k "oae-authentication/google/key=1041470933614-dislot3ktsnl4u17636b46sq82u438lk.apps.googleusercontent.com" \
-        -k "oae-authentication/google/secret=KFmWaVIvX75ZqFrDXQXAuM-a"
+        -k "oae-authentication/google/secret=KFmWaVIvX75ZqFrDXQXAuM-a" \
+        -t "cam"
 
-# Enable Feedbackify
+# Make sure local strategy is the only enabled authentication option for the global tenant
 echo ""
-echo "Enabling Feedbackify"
+echo "Enable only the local strategy for global tenant"
+oaesh -U http://<%= admin_host %> -u administrator -p administrator -- \
+    config-set \
+        -k "oae-authentication/local/allowAccountCreation=false" \
+        -k "oae-authentication/local/enabled=true" \
+        -k "oae-authentication/twitter/enabled=false" \
+        -k "oae-authentication/google/enabled=false" \
+        -k "oae-authentication/facebook/enabled=false" \
+        -k "oae-authentication/shibboleth/enabled=false" \
+        -k "oae-authentication/cas/enabled=false" \
+        -k "oae-authentication/ldap/enabled=false"
+
+# Enable Feedbackify for the tenant
+echo ""
+echo "Enabling Feedbackify for tenant"
 oaesh -U http://<%= admin_host %> -u administrator -p administrator -- \
     config-set \
         -k "oae-feedbackify/feedbackify/enabled=true" \
@@ -112,7 +125,8 @@ oaesh -U http://<%= admin_host %> -u administrator -p administrator -- \
         -k "oae-feedbackify/feedbackify/widgetEnabled=true" \
         -k "oae-feedbackify/feedbackify/widgetColor=#CB4F00" \
         -k "oae-feedbackify/feedbackify/widgetPosition=left" \
-        -k "oae-feedbackify/feedbackify/widgetBodyClass=oa-feedbackify"
+        -k "oae-feedbackify/feedbackify/widgetBodyClass=oa-feedbackify" \
+        -t "cam"
 
 # Enable Google Analytics
 echo ""
@@ -124,7 +138,7 @@ oaesh -U http://<%= admin_host %> -u administrator -p administrator -- \
 
 # Upload the departments
 echo ""
-echo "Uploading departments for tenant"
+echo "Uploading departments"
 oaesh -U http://<%= admin_host %> -u administrator -p administrator -- \
     exec -m POST "/api/departments/import" \
        -d "tenantAlias=cam" \
@@ -132,7 +146,7 @@ oaesh -U http://<%= admin_host %> -u administrator -p administrator -- \
 
 # Upload the journals
 echo ""
-echo "Uploading journals"
+echo "Uploading journals for tenant"
 oaesh -U http://<%= admin_host %> -u administrator -p administrator -- \
     exec \
         -m POST "/api/journals/import" \
@@ -147,7 +161,7 @@ oaesh -U http://<%= admin_host %> -u administrator -p administrator -- \
 
 # Enable and set the Terms and conditions
 echo ""
-echo "Enabling Terms and Conditions"
+echo "Enabling Terms and Conditions for tenant"
 TERMSANDCONDITIONS=$(cat /opt/scripts/termsandconditions.md)
 oaesh -U http://<%= admin_host %> -u administrator -p administrator -- \
     config-set \

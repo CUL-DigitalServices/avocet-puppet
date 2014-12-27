@@ -1,5 +1,6 @@
 class oaeservice::cassandra::dsc {
     include ::apt
+    include ::oaeservice::deps::package::oraclejava6jre
     include ::oaeservice::cassandra::params
 
     apt::source { 'datastax':
@@ -9,6 +10,8 @@ class oaeservice::cassandra::dsc {
         key         => 'B999A372',
         key_source  => 'http://debian.datastax.com/debian/repo_key',
     }
+
+    Class['::oracle-java'] -> Class['::cassandra']
 
     class { '::cassandra':
         owner               => $::oaeservice::cassandra::params::owner,

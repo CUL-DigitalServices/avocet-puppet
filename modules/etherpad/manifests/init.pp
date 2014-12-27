@@ -8,11 +8,13 @@ class etherpad (
         $oae_db_replication,
         $oae_db_strategy_class,
 
+        $oae_mq_hosts,
+
         $install_method         = 'archive',
         $install_config         = {
             'url_base'              => 'https://s3.amazonaws.com/oae-releases/etherpad',
-            'version_major_minor'   => '1.2',
-            'version_patch'         => '91',
+            'version_major_minor'   => '1.4',
+            'version_patch'         => '0-63-14f9c91',
             'version_nodejs'        => '0.10.17',
         },
 
@@ -36,8 +38,8 @@ class etherpad (
     user { "${etherpad_user}": ensure => present }
 
     # Install the custom CSS for etherpad from the ep_oae plugin. This is being put in
-    # both the src/ and ep_etherpad-lite/ because it doesn't always work for some reason
-    # when put in src/
+    # both the src/ and ep_etherpad-lite/ because the symlink from ep_etherpad-lite
+    # to src/ gets lost when tarring up the directory for releases
     file { "${etherpad_dir}/node_modules/ep_etherpad-lite/static/custom/pad.css":
         ensure     => present,
         source     => "${etherpad_dir}/node_modules/ep_oae/static/css/pad.css",
@@ -47,6 +49,13 @@ class etherpad (
     file { "${etherpad_dir}/src/static/custom/pad.css":
         ensure     => present,
         source     => "${etherpad_dir}/node_modules/ep_oae/static/css/pad.css",
+        require    => Class["::etherpad::install::${install_method}"],
+    }
+
+    # Overwrite ep_headings editbarButton template file
+    file { "${etherpad_dir}/node_modules/ep_headings/templates/editbarButtons.ejs":
+        ensure     => present,
+        source     => "${etherpad_dir}/node_modules/ep_oae/static/templates/editbarButtons.ejs",
         require    => Class["::etherpad::install::${install_method}"],
     }
 
@@ -68,11 +77,19 @@ class etherpad (
         require => Class["::etherpad::install::${install_method}"],
     }
 
+    # Ensure that the /var directory exists and is writeable by the Etherpad user
+    # as this is the directory that contains the minified assets
+    file { 'etherpad_var_dir':
+        path    => "${etherpad_dir}/var",
+        ensure  => directory,
+        mode    => "744",
+    }
+
     # Ensure the etherpad user owns all the etherpad resources
     exec { 'chown_etherpad_dir':
         command => "chown -R ${etherpad_user}:${etherpad_user} ${etherpad_dir}",
         cwd     => $etherpad_dir,
-        require => [File['etherpad_apikey_txt'], User[$etherpad_user]],
+        require => [File['etherpad_apikey_txt'], File['etherpad_var_dir'], User[$etherpad_user]],
     }
 
     # Daemon script for the etherpad service
@@ -89,6 +106,7 @@ class etherpad (
         provider    => upstart,
         require     => [
             File["${etherpad_dir}/node_modules/ep_etherpad-lite/static/custom/pad.css"],
+            File["${etherpad_dir}/node_modules/ep_headings/templates/editbarButtons.ejs"],
             File["${etherpad_dir}/src/static/custom/pad.css"],
             File['etherpad_settings_json'],
             File['etherpad_apikey_txt'],

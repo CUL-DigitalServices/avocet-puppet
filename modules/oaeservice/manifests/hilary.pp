@@ -40,6 +40,7 @@ class oaeservice::hilary {
   $web_domain = hiera('web_domain')
   $app_admin_tenant = hiera('app_admin_tenant', 'admin')
   $admin_domain = "${app_admin_tenant}.${web_domain}"
+  $shib_domain = hiera('shibboleth_sp_host', 'shib-sp.oae.com')
 
   class { '::hilary':
     app_root_dir                  => hiera('app_root_dir'),
@@ -56,6 +57,7 @@ class oaeservice::hilary {
     config_signing_key            => hiera('app_signing_key'),
     config_telemetry_circonus_url => hiera('circonus_url', false),
     config_servers_admin_host     => $admin_domain,
+    config_servers_shib_host      => $shib_domain,
     config_servers_use_https      => hiera('app_use_https', true),
     config_servers_strict_https   => hiera('app_strict_https', true),
 
@@ -84,6 +86,9 @@ class oaeservice::hilary {
 
     config_email_debug                      => hiera('email_debug'),
     config_email_customEmailTemplatesDir    => hiera('email_customEmailTemplatesDir'),
+    config_email_deduplicationInterval      => hiera('email_deduplicationInterval'),
+    config_email_throttleTimespan           => hiera('email_throttleTimespan'),
+    config_email_throttleCount              => hiera('email_throttleCount'),
     config_email_transport                  => hiera('email_transport'),
     config_email_sendmail_path              => hiera('email_sendmail_path'),
     config_email_smtp_service               => hiera('email_smtp_service'),
@@ -93,6 +98,8 @@ class oaeservice::hilary {
     config_previews_credentials_username    => hiera('app_admin_username', 'administrator'),
     config_previews_credentials_password    => hiera('app_admin_password', 'administrator'),
 
-    config_servers_server_internal_address  => hiera('web_internal_address', '127.0.0.1')
+    config_servers_server_internal_address  => hiera('web_internal_address', '127.0.0.1'),
+
+    config_search_enabled   => hiera('search_enabled', true),
   }
 }

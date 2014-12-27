@@ -1,6 +1,6 @@
 class dse::cassandra (
     $dse_package        = 'dse-full',
-    $dse_version        = '3.2.5-1',
+    $dse_version        = '4.5.1-1',
     $owner              = 'cassandra',
     $group              = 'cassandra',
     $cluster_name       = 'Apereo OAE Cluster',
@@ -16,7 +16,7 @@ class dse::cassandra (
   require dse::apt
 
 
-  $dse_base_packages = ['dse-libtomcat', 'dse-libsqoop', 'dse-liblog4j', 'dse-libmahout', 'dse-libhive', 'dse-libcassandra', 'dse-libhadoop', 'dse-libpig' ]
+  $dse_base_packages = ['dse-libtomcat', 'dse-libsqoop', 'dse-liblog4j', 'dse-libmahout', 'dse-libhive', 'dse-libcassandra', 'dse-libhadoop', 'dse-libpig', 'dse-libspark' ]
   package { $dse_base_packages:
     ensure => $dse_version
   }

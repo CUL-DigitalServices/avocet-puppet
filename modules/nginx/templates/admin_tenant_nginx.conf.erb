@@ -1,33 +1,47 @@
-<% if ssl_policy ==  'redirect_http' -%>
+<% if @ssl_policy ==  'redirect_http' -%>
 server {
     listen          80;
-    server_name     <%= server_name %>;
+    server_name     <%= @server_name %>;
     return          301 https://$host$request_uri;
 }
 <% end -%>
 
 server {
-<% if ssl_policy == 'allow_http' -%>
+<% if @ssl_policy == 'allow_http' -%>
     listen      80;
 <% end -%>
     listen      443 ssl;
-    server_name <%= server_name %>;
+    server_name <%= @server_name %>;
 
-    ssl_certificate      <%= ssl_crt_path %>;
-    ssl_certificate_key  <%= ssl_key_path %>;
+    ssl_certificate      <%= @ssl_crt_path %>;
+    ssl_certificate_key  <%= @ssl_key_path %>;
 
     # Prevent BEAST attack
     # @see http://www.kb.cert.org/vuls/id/864643
-    ssl_ciphers RC4:HIGH:!aNULL:!MD5;
+    ssl_ciphers EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:EECDH+RC4:RSA+RC4:!MD5;
     ssl_prefer_server_ciphers on;
+
+    # Prevent POODLE by not using SSL v3
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+
+    # Enable HSTS which tells browsers not to use http:// for at least a year
+    add_header Strict-Transport-Security "max-age=31536000; includeSubdomains";
 
 
     ######################
     ## SHARED RESOURCES ##
     ######################
 
+    # Enable CORS support for the font-awesome webfont
+    # so we can load it from our CDN
+    location /shared/vendor/css/font-awesome/fonts/ {
+        alias <%= @app_ui_path %>/shared/vendor/css/font-awesome/fonts/;
+        add_header Access-Control-Allow-Origin "*";
+        expires max;
+    }
+
     location /shared/ {
-        alias <%= app_ui_path %>/shared/;
+        alias <%= @app_ui_path %>/shared/;
         autoindex off;
         expires max;
     }
@@ -45,6 +59,7 @@ server {
     rewrite ^/unavailable$       /avocet/errors/unavailable.html last;
 
     rewrite ^/favicon.ico$       /avocet/images/favicon.ico last;
+    rewrite ^/robots.txt              /shared/oae/robots.txt last;
 
 
     #####################
@@ -52,27 +67,30 @@ server {
     #####################
 
     location /ui/ {
-        alias <%= app_ui_path %>/ui/;
+        alias <%= @app_ui_path %>/ui/;
         autoindex off;
         expires max;
     }
 
     location /admin/ {
-        alias <%= app_ui_path %>/admin/;
+        alias <%= @app_ui_path %>/admin/;
         autoindex off;
         expires max;
     }
 
     # HTML files under /admin are not hashed and should not be cached
     location ~* /admin/([^\.]+).html$ {
-        alias <%= app_ui_path %>/admin/$1.html;
+        alias <%= @app_ui_path %>/admin/$1.html;
         expires -1;
     }
 
-    rewrite ^/$              /admin/index.html last;
-    rewrite ^/modules        /admin/index.html last;
-    rewrite ^/tenants        /admin/index.html last;
-    rewrite ^/tenant/(.*)$   /admin/index.html last;
+    rewrite ^/$                 /admin/index.html last;
+    rewrite ^/configuration     /admin/index.html last;
+    rewrite ^/maintenance       /admin/index.html last;
+    rewrite ^/skinning          /admin/index.html last;
+    rewrite ^/tenant/(.*)$      /admin/index.html last;
+    rewrite ^/tenants           /admin/index.html last;
+    rewrite ^/usermanagement    /admin/index.html last;
 
     ######################
     ## AVOCET RESOURCES ##
@@ -89,10 +107,32 @@ server {
     ######################
 
     location /node_modules/ {
-        alias <%= app_ui_path %>/node_modules/;
+        alias <%= @app_ui_path %>/node_modules/;
         autoindex off;
         expires max;
     }
+
+
+    ####################
+    ## DOCS RESOURCES ##
+    ####################
+
+    location /docs/ {
+        alias <%= @app_ui_path %>/docs/;
+        autoindex off;
+    }
+
+    # HTML files under /docs are not hashed and should not be cached
+    location ~* /docs/([^\.]+).html$ {
+        alias <%= @app_ui_path %>/docs/$1.html;
+        expires -1;
+    }
+
+    rewrite ^/docs$                     /docs/index.html last;
+    rewrite ^/docs/internal$            /docs/internal/index.html last;
+    rewrite ^/docs/internal/backend     /docs/internal/index.html last;
+    rewrite ^/docs/internal/frontend    /docs/internal/index.html last;
+    rewrite ^/docs/rest$                /docs/rest/index.html last;
 
 
     #################

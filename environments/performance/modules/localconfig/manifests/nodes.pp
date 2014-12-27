@@ -49,6 +49,25 @@ node 'app3' inherits app {
   hiera_include(classes)
 }
 
+node 'app4' inherits app {
+  $nodesuffix = 4
+  hiera_include(classes)
+}
+
+node 'app5' inherits app {
+  $nodesuffix = 5
+  hiera_include(classes)
+}
+
+node 'app6' inherits app {
+  $nodesuffix = 6
+  hiera_include(classes)
+}
+
+node 'app7' inherits app {
+  $nodesuffix = 7
+  hiera_include(classes)
+}
 
 
 ####################
@@ -202,7 +221,6 @@ node 'proxy0' inherits proxy {
 }
 
 
-
 ###################
 ## UTILITY NODES ##
 ###################
@@ -214,5 +232,10 @@ node 'puppet' {
 
 node 'monitor' {
   $nodetype = 'monitor'
+  hiera_include(classes)
+}
+
+node 'syslog'  {
+  $nodetype = 'syslog'
   hiera_include(classes)
 }
