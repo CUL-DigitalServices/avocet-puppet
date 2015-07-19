@@ -128,7 +128,7 @@ echo "Uploading departments for tenant"
 oaesh -U http://<%= admin_host %> -u administrator -p administrator -- \
     exec -m POST "/api/departments/import" \
        -d "tenantAlias=cam" \
-       -F "departments=/opt/scripts/departments.csv"
+       -F "file=/opt/scripts/departments.csv"
 
 # Upload the journals
 echo ""
@@ -136,7 +136,7 @@ echo "Uploading journals"
 oaesh -U http://<%= admin_host %> -u administrator -p administrator -- \
     exec \
         -m POST "/api/journals/import" \
-        -F "journals=/opt/scripts/journals.csv"
+        -F "file=/opt/scripts/journals.csv"
 
 # Set the addendum download url
 echo ""
